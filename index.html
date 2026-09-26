@@ -150,6 +150,9 @@
   }
   .rate-range{ flex:1; min-width:120px; accent-color:var(--color-navy); }
   .speech-warning{ font-size:13px; color:#8A3A2B; margin:8px 0 0; text-align:center; }
+  .speech-options{ display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px; margin:0 0 8px; font-size:14px; }
+  .speech-options select{ max-width:100%; min-width:180px; padding:6px; font:inherit; color:var(--color-ink); }
+  .speech-status{ min-height:1.8em; margin:0 0 16px; text-align:center; font-size:13px; color:var(--color-navy); }
 
   .audio-compact{
     display:flex; align-items:center; justify-content:center; gap:8px;
@@ -396,7 +399,7 @@ var PEOPLE = [
   { id:"N01", name:"朝永振一郎", nameHtml:"\u003cruby>朝永\u003crt>ともなが\u003c/rt>\u003c/ruby>\u003cruby>振一郎\u003crt>しんいちろう\u003c/rt>\u003c/ruby>", reading:"ともながしんいちろう", years:"1906〜1979年", country:"日本", field:"物理学者", photo:null, quotes:[], legacyId:"N01", legacyQuotes:["科学とは、疑うことから始まる。","私たちが自然について知っていることは、まだほんのわずかにすぎない。","不確かさを恐れるな。それこそが、量子の世界の本当の姿だ。"] },
   { id:"N02", name:"江崎玲於奈", nameHtml:"\u003cruby>江崎\u003crt>えさき\u003c/rt>\u003c/ruby>\u003cruby>玲於奈\u003crt>れおな\u003c/rt>\u003c/ruby>", reading:"えさきれおな", years:"1925〜1999年", country:"日本", field:"物理学者", photo:null, quotes:[], legacyId:"N02", legacyQuotes:["創造性とは、常識にとらわれず、失敗をおそれずに挑戦する心である。","若い人には、群れを離れて一人で歩く勇気を持ってほしい。","独創的な研究は、誰も見ていない場所にこそ生まれる。"] },
   { id:"N03", name:"白川英樹", nameHtml:"\u003cruby>白川\u003crt>しらかわ\u003c/rt>\u003c/ruby>\u003cruby>英樹\u003crt>ひでき\u003c/rt>\u003c/ruby>", reading:"しらかわひでき", years:"1936〜", country:"日本", field:"化学者", photo:null, quotes:[], legacyId:"N03", legacyQuotes:["失敗の中にこそ、次の発見の芽がある。","教科書に書いてあることがすべてではない。自分の目で確かめよ。","偶然の発見を見逃さない目を、日ごろから養っておくことが大切だ。"] },
-  { id:"N04", name:"野依良治", nameHtml:"\u003cruby>野依\u003crt>のより\u003c/rt>\u003c/ruby>\u003cruby>良治\u003crt>よしはる\u003c/rt>\u003c/ruby>", reading:"のよりよしはる", years:"1938〜", country:"日本", field:"化学者", photo:null, quotes:[], legacyId:"N04", legacyQuotes:["模倣からは新しいものは生まれない。オリジナリティを追い求めよ。","失敗を恐れて何もしないことこそ、最大の失敗である。","自然界にないものを作り出す。それが化学者のロマンだ。"] },
+  { id:"N04", name:"野依良治", nameHtml:"\u003cruby>野依\u003crt>のより\u003c/rt>\u003c/ruby>\u003cruby>良治\u003crt>りょうじ\u003c/rt>\u003c/ruby>", reading:"のよりりょうじ", years:"1938〜", country:"日本", field:"化学者", photo:null, quotes:[], legacyId:"N04", legacyQuotes:["模倣からは新しいものは生まれない。オリジナリティを追い求めよ。","失敗を恐れて何もしないことこそ、最大の失敗である。","自然界にないものを作り出す。それが化学者のロマンだ。"] , legacyReading:"のよりよしはる", legacyNameHtml:"\u003cruby>野依\u003crt>のより\u003c/rt>\u003c/ruby>\u003cruby>良治\u003crt>よしはる\u003c/rt>\u003c/ruby>" },
   { id:"N05", name:"小柴昌俊", nameHtml:"\u003cruby>小柴\u003crt>こしば\u003c/rt>\u003c/ruby>\u003cruby>昌俊\u003crt>まさとし\u003c/rt>\u003c/ruby>", reading:"こしばまさとし", years:"1926〜2020年", country:"日本", field:"物理学者", photo:null, quotes:[], legacyId:"N05", legacyQuotes:["科学は、誰も見たことのない景色を見るための道具だ。","地下深くの水槽で、何年もひたすら待ち続けた。それでも私は楽しかった。","失敗してもいい。あきらめずに続けることが、いちばん大事なことだ。"] },
   { id:"N06", name:"田中耕一", nameHtml:"\u003cruby>田中\u003crt>たなか\u003c/rt>\u003c/ruby>\u003cruby>耕一\u003crt>こういち\u003c/rt>\u003c/ruby>", reading:"たなかこういち", years:"1959〜", country:"日本", field:"化学者", photo:null, quotes:[], legacyId:"N06", legacyQuotes:["失敗だと思った実験が、思いがけない発見につながることがある。","会社員である私がノーベル賞をいただけたのは、たくさんの人に支えられたからだ。","わからないことをわからないと言える勇気を持ちなさい。"] },
   { id:"N07", name:"山中伸弥", nameHtml:"\u003cruby>山中\u003crt>やまなか\u003c/rt>\u003c/ruby>\u003cruby>伸弥\u003crt>しんや\u003c/rt>\u003c/ruby>", reading:"やまなかしんや", years:"1962〜", country:"日本", field:"生理学・医学者", photo:null, quotes:[], legacyId:"N07", legacyQuotes:["何かを成し遂げるには、九十九回失敗しても、あきらめないことが必要だ。","VW、Vision（ビジョン）とWork hard（一生懸命働くこと）。この二つが夢をかなえる。","人生に無駄なことは一つもない。回り道こそが、道を切りひらく。"] },
@@ -409,7 +412,7 @@ var PEOPLE = [
   { id:"N14", name:"梶田隆章", nameHtml:"\u003cruby>梶田\u003crt>かじた\u003c/rt>\u003c/ruby>\u003cruby>隆章\u003crt>たかあき\u003c/rt>\u003c/ruby>", reading:"かじたたかあき", years:"1957〜", country:"日本", field:"物理学者", photo:null, quotes:[], legacyId:"N14", legacyQuotes:["ニュートリノは、宇宙のもっとも小さな謎を解く鍵だ。","地道な観測とデータの積み重ねが、大きな発見を生む。","科学の答えは、いつも自然そのものの中にある。"] },
   { id:"N15", name:"本庶佑", nameHtml:"\u003cruby>本庶\u003crt>ほんじょ\u003c/rt>\u003c/ruby>\u003cruby>佑\u003crt>たすく\u003c/rt>\u003c/ruby>", reading:"ほんじょたすく", years:"1942〜", country:"日本", field:"生理学・医学者", photo:null, quotes:[], legacyId:"N15", legacyQuotes:["教科書に書いてあることを疑ってみることが、科学の出発点だ。","がんとの闘いは、免疫の力を信じることから始まった。","若い人には、権威を疑い、自分の頭で考えてほしい。"] },
   { id:"N16", name:"吉野彰", nameHtml:"\u003cruby>吉野\u003crt>よしの\u003c/rt>\u003c/ruby>\u003cruby>彰\u003crt>あきら\u003c/rt>\u003c/ruby>", reading:"よしのあきら", years:"1947〜", country:"日本", field:"化学者", photo:null, quotes:[], legacyId:"N16", legacyQuotes:["リチウムイオン電池は、多くの人の失敗と挑戦の上に生まれた。","好奇心を持ち続けることが、研究者にとって何より大切だ。","小さな技術が、世界を大きく変えることがある。"] },
-  { id:"N17", name:"真鍋淑郎", nameHtml:"\u003cruby>真鍋\u003crt>まなべ\u003c/rt>\u003c/ruby>\u003cruby>淑郎\u003crt>としろう\u003c/rt>\u003c/ruby>", reading:"まなべとしろう", years:"1931〜", country:"日本", field:"物理学者（気候科学）", photo:null, quotes:[], legacyId:"N17", legacyQuotes:["気候のモデルを作ることは、地球そのものを理解しようとする試みだ。","科学者は、自然が発する小さな信号を見逃してはならない。","好奇心のおもむくままに、研究を続けてきただけだ。"] },
+  { id:"N17", name:"真鍋淑郎", nameHtml:"\u003cruby>真鍋\u003crt>まなべ\u003c/rt>\u003c/ruby>\u003cruby>淑郎\u003crt>しゅくろう\u003c/rt>\u003c/ruby>", reading:"まなべしゅくろう", years:"1931〜", country:"日本", field:"物理学者（気候科学）", photo:null, quotes:[], legacyId:"N17", legacyQuotes:["気候のモデルを作ることは、地球そのものを理解しようとする試みだ。","科学者は、自然が発する小さな信号を見逃してはならない。","好奇心のおもむくままに、研究を続けてきただけだ。"] , legacyReading:"まなべとしろう", legacyNameHtml:"\u003cruby>真鍋\u003crt>まなべ\u003c/rt>\u003c/ruby>\u003cruby>淑郎\u003crt>としろう\u003c/rt>\u003c/ruby>" },
   { id:"N18", name:"下村脩", nameHtml:"\u003cruby>下村\u003crt>しもむら\u003c/rt>\u003c/ruby>\u003cruby>脩\u003crt>おさむ\u003c/rt>\u003c/ruby>", reading:"しもむらおさむ", years:"1928〜2018年", country:"日本", field:"化学者", photo:null, quotes:[], legacyId:"N18", legacyQuotes:["クラゲの光る仕組みを知りたい。その一心で、ひたすら実験を続けた。","役に立つかどうかより、まず自然の不思議を解き明かしたかった。","何万匹ものクラゲを集め続けた日々が、思いがけない発見につながった。"] },
   { id:"N19", name:"田中正造", nameHtml:"\u003cruby>田中\u003crt>たなか\u003c/rt>\u003c/ruby>\u003cruby>正造\u003crt>しょうぞう\u003c/rt>\u003c/ruby>", reading:"たなかしょうぞう", years:"1841〜1913年", country:"日本", field:"環境運動家", photo:null, quotes:[], legacyId:"N19", legacyQuotes:["谷中村の人々の苦しみを、わたしは見過ごすことができなかった。","民主主義は、川や山を汚してまで発展を求めるべきではない。","真の文明は、山を荒らさず、川を汚さず、人を殺さぬものだ。"] },
   { id:"N20", name:"杉田玄白", nameHtml:"\u003cruby>杉田\u003crt>すぎた\u003c/rt>\u003c/ruby>\u003cruby>玄白\u003crt>げんぱく\u003c/rt>\u003c/ruby>", reading:"すぎたげんぱく", years:"1733〜1817年", country:"日本", field:"医学者", photo:null, quotes:[], legacyId:"N20", legacyQuotes:["ターヘル・アナトミアを、一字一句、命がけで訳した。","おどろき、かつあきれ果てたのは、これまでの医学の誤りの多さであった。","知らないことを知ろうとする心こそが、学問の入り口である。"] },
@@ -419,7 +422,7 @@ var PEOPLE = [
   { id:"N24", name:"大塩平八郎", nameHtml:"\u003cruby>大塩\u003crt>おおしお\u003c/rt>\u003c/ruby>\u003cruby>平八郎\u003crt>へいはちろう\u003c/rt>\u003c/ruby>", reading:"おおしおへいはちろう", years:"1793〜1837年", country:"日本", field:"思想家・反乱指導者", photo:null, quotes:[], legacyId:"N24", legacyQuotes:["世の中の不正を見て見ぬふりはできぬ。","民が飢えているときに、役人が私腹を肥やすことは許されぬ。","たとえ一人であっても、正しいと信じる道を進む。"] },
   { id:"N25", name:"井原西鶴", nameHtml:"\u003cruby>井原\u003crt>いはら\u003c/rt>\u003c/ruby>\u003cruby>西鶴\u003crt>さいかく\u003c/rt>\u003c/ruby>", reading:"いはらさいかく", years:"1642〜1693年", country:"日本", field:"文学者", photo:null, quotes:[], legacyId:"N25", legacyQuotes:["世の中は、金と人情でできている。それを描かずして何を描くのか。","浮世（うきよ）は、悲しくもあり、おかしくもある。それが人の世だ。","筆一本で、この世のすべてを描いてみせよう。"] },
   { id:"N26", name:"近松門左衛門", nameHtml:"\u003cruby>近松\u003crt>ちかまつ\u003c/rt>\u003c/ruby>\u003cruby>門左衛門\u003crt>もんざえもん\u003c/rt>\u003c/ruby>", reading:"ちかまつもんざえもん", years:"1653〜1724年", country:"日本", field:"劇作家", photo:null, quotes:[], legacyId:"N26", legacyQuotes:["虚実皮膜（きょじつひまく）の間に、芸の真実がある。","人の情けを描かずして、劇は成り立たぬ。","義理と人情のはざまで、人は生きているのだ。"] },
-  { id:"N27", name:"与謝蕪村", nameHtml:"\u003cruby>与謝\u003crt>よさ\u003c/rt>\u003c/ruby>\u003cruby>蕪村\u003crt>ぶそん\u003c/rt>\u003c/ruby>", reading:"よさのぶそん", years:"1716〜1783年", country:"日本", field:"俳人・画家", photo:null, quotes:[], legacyId:"N27", legacyQuotes:["菜の花や 月は東に 日は西に","春の海 終日のたり のたりかな","絵を描くように俳句を詠み、俳句を詠むように絵を描く。"] },
+  { id:"N27", name:"与謝蕪村", nameHtml:"\u003cruby>与謝\u003crt>よさ\u003c/rt>\u003c/ruby>\u003cruby>蕪村\u003crt>ぶそん\u003c/rt>\u003c/ruby>", reading:"よさぶそん", years:"1716〜1783年", country:"日本", field:"俳人・画家", photo:null, quotes:[], legacyId:"N27", legacyQuotes:["菜の花や 月は東に 日は西に","春の海 終日のたり のたりかな","絵を描くように俳句を詠み、俳句を詠むように絵を描く。"] , legacyReading:"よさのぶそん" },
   { id:"N28", name:"小林一茶", nameHtml:"\u003cruby>小林\u003crt>こばやし\u003c/rt>\u003c/ruby>\u003cruby>一茶\u003crt>いっさ\u003c/rt>\u003c/ruby>", reading:"こばやしいっさ", years:"1763〜1828年", country:"日本", field:"俳人", photo:null, quotes:[], legacyId:"N28", legacyQuotes:["やせ蛙 まけるな一茶 これにあり","雀の子 そこのけそこのけ お馬が通る","われと来て 遊べや親の ない雀"] },
   { id:"N29", name:"葛飾応為", nameHtml:"\u003cruby>葛飾\u003crt>かつしか\u003c/rt>\u003c/ruby>\u003cruby>応為\u003crt>おうい\u003c/rt>\u003c/ruby>", reading:"かつしかおうい", years:"生没年不詳（江戸後期）", country:"日本", field:"芸術家", photo:null, quotes:[], legacyId:"N29", legacyQuotes:["光と影を描くことこそ、絵師の腕の見せどころ。","父の背中を見て、わたしは絵師になった。","女だからと侮られても、筆の力で見返してみせる。"] },
   { id:"N30", name:"間宮林蔵", nameHtml:"\u003cruby>間宮\u003crt>まみや\u003c/rt>\u003c/ruby>\u003cruby>林蔵\u003crt>りんぞう\u003c/rt>\u003c/ruby>", reading:"まみやりんぞう", years:"1780〜1844年", country:"日本", field:"探検家・地理学者", photo:null, quotes:[], legacyId:"N30", legacyQuotes:["この目で確かめぬかぎり、地図には描けぬ。","樺太は島か、大陸の一部か。それを確かめるまで、わたしは帰らぬ。","困難な旅こそ、真実を知るための道である。"] },
@@ -443,8 +446,8 @@ var PEOPLE = [
   { id:"J37", name:"上杉謙信", nameHtml:"\u003cruby>上杉\u003crt>うえすぎ\u003c/rt>\u003c/ruby>\u003cruby>謙信\u003crt>けんしん\u003c/rt>\u003c/ruby>", reading:"うえすぎけんしん", years:"1530〜1578年", country:"日本", field:"戦国武将", photo:null, quotes:[], legacyId:"J37", legacyQuotes:["わが上には天なく、わが下には地なし。","義のために戦う。それ以外に戦う理由はない。","毘（びしゃもんてん）の旗のもと、正義を貫く。"] },
   { id:"J38", name:"伊達正宗", nameHtml:"\u003cruby>伊達\u003crt>だて\u003c/rt>\u003c/ruby>\u003cruby>正宗\u003crt>まさむね\u003c/rt>\u003c/ruby>", reading:"だてまさむね", years:"1567〜1636年", country:"日本", field:"戦国武将", photo:null, quotes:[], legacyId:"J38", legacyQuotes:["独眼竜と呼ばれても、恐れることなく前を見る。","わしが十年早く生まれておれば、天下を取っていたであろう。","梅は蕾のうちから、雪の中でも香を放つ。"] },
   { id:"J39", name:"北条早雲", nameHtml:"\u003cruby>北条\u003crt>ほうじょう\u003c/rt>\u003c/ruby>\u003cruby>早雲\u003crt>そううん\u003c/rt>\u003c/ruby>", reading:"ほうじょうそううん", years:"1432〜1519年", country:"日本", field:"戦国武将", photo:null, quotes:[], legacyId:"J39", legacyQuotes:["一国の主となるは、家柄ではなく、器量による。","民を豊かにしてこそ、真の国主である。","下剋上の世を、この手で切り開く。"] },
-  { id:"J40", name:"北条氏康", nameHtml:"\u003cruby>北条\u003crt>ほうじょう\u003c/rt>\u003c/ruby>\u003cruby>氏康\u003crt>うじやす\u003c/rt>\u003c/ruby>", reading:"ほうじょうuじやす", years:"1515〜1571年", country:"日本", field:"戦国武将", photo:null, quotes:[], legacyId:"J40", legacyQuotes:["民のかまどの煙が立たぬなら、年貢は取らぬ。","家臣も民も、我が子のように思う。","北条の治める地には、飢える者を出さぬ。"] },
-  { id:"J41", name:"北条氏政", nameHtml:"\u003cruby>北条\u003crt>ほうじょう\u003c/rt>\u003c/ruby>\u003cruby>氏政\u003crt>うじまさ\u003c/rt>\u003c/ruby>", reading:"ほうじょうuじまさ", years:"1538〜1591年", country:"日本", field:"戦国武将", photo:null, quotes:[], legacyId:"J41", legacyQuotes:["父祖の築いた北条の家を、わが代で終わらせるわけにはいかぬ。","小田原の城とともに、北条の意地を見せる。","たとえ天下の情勢が変わろうとも、義を通す。"] },
+  { id:"J40", name:"北条氏康", nameHtml:"\u003cruby>北条\u003crt>ほうじょう\u003c/rt>\u003c/ruby>\u003cruby>氏康\u003crt>うじやす\u003c/rt>\u003c/ruby>", reading:"ほうじょううじやす", years:"1515〜1571年", country:"日本", field:"戦国武将", photo:null, quotes:[], legacyId:"J40", legacyQuotes:["民のかまどの煙が立たぬなら、年貢は取らぬ。","家臣も民も、我が子のように思う。","北条の治める地には、飢える者を出さぬ。"] , legacyReading:"ほうじょうuじやす" },
+  { id:"J41", name:"北条氏政", nameHtml:"\u003cruby>北条\u003crt>ほうじょう\u003c/rt>\u003c/ruby>\u003cruby>氏政\u003crt>うじまさ\u003c/rt>\u003c/ruby>", reading:"ほうじょううじまさ", years:"1538〜1591年", country:"日本", field:"戦国武将", photo:null, quotes:[], legacyId:"J41", legacyQuotes:["父祖の築いた北条の家を、わが代で終わらせるわけにはいかぬ。","小田原の城とともに、北条の意地を見せる。","たとえ天下の情勢が変わろうとも、義を通す。"] , legacyReading:"ほうじょうuじまさ" },
   { id:"J42", name:"武田信玄", nameHtml:"\u003cruby>武田\u003crt>たけだ\u003c/rt>\u003c/ruby>\u003cruby>信玄\u003crt>しんげん\u003c/rt>\u003c/ruby>", reading:"たけだしんげん", years:"1521〜1573年", country:"日本", field:"戦国武将", photo:null, quotes:[], legacyId:"J42", legacyQuotes:["風林火山――疾きこと風の如く、徐かなること林の如く、侵掠すること火の如く、動かざること山の如し。","人は城、人は石垣、人は堀。情けは味方、仇は敵なり。","戦わずして勝つ。それが兵法の極意である。"] },
   { id:"J43", name:"上杉景勝", nameHtml:"\u003cruby>上杉\u003crt>うえすぎ\u003c/rt>\u003c/ruby>\u003cruby>景勝\u003crt>かげかつ\u003c/rt>\u003c/ruby>", reading:"うえすぎかげかつ", years:"1556〜1623年", country:"日本", field:"戦国武将", photo:null, quotes:[], legacyId:"J43", legacyQuotes:["義を重んじる。それが上杉の家風である。","徳川の世にあっても、義の心は曲げぬ。","会津の地を、しかと守り抜く。"] },
   { id:"J44", name:"長宗我部元親", nameHtml:"\u003cruby>長宗我部\u003crt>ちょうそかべ\u003c/rt>\u003c/ruby>\u003cruby>元親\u003crt>もとちか\u003c/rt>\u003c/ruby>", reading:"ちょうそかべもとちか", years:"1539〜1599年", country:"日本", field:"戦国武将", photo:null, quotes:[], legacyId:"J44", legacyQuotes:["四国を、この手で一つにまとめてみせる。","土佐の武士に、恐れるものなど何もない。","一領具足の心意気こそ、わが力の源である。"] },
@@ -478,7 +481,7 @@ var PEOPLE = [
   { id:"J01", name:"蘇我稲目", nameHtml:"\u003cruby>蘇我\u003crt>そが\u003c/rt>\u003c/ruby>\u003cruby>稲目\u003crt>いなめ\u003c/rt>\u003c/ruby>", reading:"そがいなめ", years:"540〜571年", country:"日本", field:"政治家・指導者", photo:null, quotes:[], legacyId:"J01", legacyQuotes:["仏の教えは、この国を豊かにする新しい知恵である。","新しいものを恐れず、まず受け入れてみることだ。","国を治めるには、遠い先を見すえねばならぬ。"] },
   { id:"J02", name:"中大兄皇子", nameHtml:"\u003cruby>中大兄\u003crt>なかのおおえの\u003c/rt>\u003c/ruby>\u003cruby>皇子\u003crt>おうじ\u003c/rt>\u003c/ruby>", reading:"なかのおおえのおうじ", years:"626〜671年", country:"日本", field:"政治家・指導者", photo:null, quotes:[], legacyId:"J02", legacyQuotes:["この国のかたちを、根本から変えねばならぬ。","蘇我の一族といえど、法の外にあってはならぬ。","天下は、私物ではなく、公のものである。"] },
   { id:"J03", name:"藤原道長", nameHtml:"\u003cruby>藤原\u003crt>ふじわら\u003c/rt>\u003c/ruby>\u003cruby>道長\u003crt>みちなが\u003c/rt>\u003c/ruby>", reading:"ふじわらみちなが", years:"966〜1028年", country:"日本", field:"政治家・指導者", photo:null, quotes:[], legacyId:"J03", legacyQuotes:["この世をば わが世とぞ思ふ 望月の 欠けたることも なしと思へば","栄華は、一族の努力の積み重ねの上にある。","朝廷にあっては、まず礼と和を重んじよ。"] },
-  { id:"J04", name:"空海", nameHtml:"\u003cruby>空海\u003crt>こうかい\u003c/rt>\u003c/ruby>", reading:"こうかい", years:"774〜835年", country:"日本", field:"宗教家・思想家", photo:null, quotes:[], legacyId:"J04", legacyQuotes:["虚しく往きて実ちて帰る。","善悪は人にあり、道は自ら求めるものである。","この身は仮のもの、心こそまことである。"] },
+  { id:"J04", name:"空海", nameHtml:"\u003cruby>空海\u003crt>くうかい\u003c/rt>\u003c/ruby>", reading:"くうかい", years:"774〜835年", country:"日本", field:"宗教家・思想家", photo:null, quotes:[], legacyId:"J04", legacyQuotes:["虚しく往きて実ちて帰る。","善悪は人にあり、道は自ら求めるものである。","この身は仮のもの、心こそまことである。"] , legacyReading:"こうかい", legacyNameHtml:"\u003cruby>空海\u003crt>こうかい\u003c/rt>\u003c/ruby>" },
   { id:"J05", name:"最澄", nameHtml:"\u003cruby>最澄\u003crt>さいちょう\u003c/rt>\u003c/ruby>", reading:"さいちょう", years:"767〜822年", country:"日本", field:"宗教家", photo:null, quotes:[], legacyId:"J05", legacyQuotes:["一隅を照らす、これ則ち国宝なり。","忘己利他（もうこりた）――己を忘れて他を利するのが、仏の道である。","山家（さんげ）に学ぶ者は、まず心を静めよ。"] },
   { id:"J06", name:"菅原道真", nameHtml:"\u003cruby>菅原\u003crt>すがわら\u003c/rt>\u003c/ruby>\u003cruby>道真\u003crt>みちざね\u003c/rt>\u003c/ruby>", reading:"すがわらみちざね", years:"845〜903年", country:"日本", field:"政治家・学者", photo:null, quotes:[], legacyId:"J06", legacyQuotes:["東風吹かば 匂ひおこせよ 梅の花 あるじなしとて 春な忘れそ","心だにまことの道にかなひなば 祈らずとても神や守らん","学問は、身分を越えて人を高める。"] },
   { id:"J07", name:"和泉式部", nameHtml:"\u003cruby>和泉\u003crt>いずみ\u003c/rt>\u003c/ruby>\u003cruby>式部\u003crt>しきぶ\u003c/rt>\u003c/ruby>", reading:"いずみしきぶ", years:"生没年不詳（平安中期）", country:"日本", field:"文学者", photo:null, quotes:[], legacyId:"J07", legacyQuotes:["あらざらむ この世のほかの 思ひ出に 今ひとたびの 逢ふこともがな","もの思へば 沢の蛍も わが身より あくがれいづる 魂かとぞ見る","歌には、言葉にできない心を映すことができる。"] },
@@ -498,7 +501,7 @@ var PEOPLE = [
   { id:"J22", name:"足利義満", nameHtml:"\u003cruby>足利\u003crt>あしかが\u003c/rt>\u003c/ruby>\u003cruby>義満\u003crt>よしみつ\u003c/rt>\u003c/ruby>", reading:"あしかがよしみつ", years:"1358〜1408年", country:"日本", field:"政治家・指導者", photo:null, quotes:[], legacyId:"J22", legacyQuotes:["この国のまつりごとと、文化の両方を極めてみせる。","南北に分かれたこの国を、一つにまとめねばならぬ。","唐との交易こそ、この国を富ませる道である。"] },
   { id:"J23", name:"観阿弥・世阿弥", nameHtml:"\u003cruby>観阿弥\u003crt>かんあみ\u003c/rt>\u003c/ruby>・\u003cruby>世阿弥\u003crt>ぜあみ\u003c/rt>\u003c/ruby>", reading:"かんあみ・ぜあみ", years:"1333〜1384年 / 1363〜1443年", country:"日本", field:"芸術家", photo:null, quotes:[], legacyId:"J23", legacyQuotes:["秘すれば花なり。秘せずは花なるべからず。","初心忘るべからず。","物まねの上手に非ずして、能の名手とは言われぬ。"] },
   { id:"J24", name:"宗祇", nameHtml:"\u003cruby>宗祇\u003crt>そうぎ\u003c/rt>\u003c/ruby>", reading:"そうぎ", years:"1421〜1502年", country:"日本", field:"文学者・芸術家", photo:null, quotes:[], legacyId:"J24", legacyQuotes:["旅から旅へ、連歌の心を各地に伝えたい。","古き歌の心を学び、新しき言葉を紡ぐ。","一座の心が一つにならねば、良き連歌は生まれぬ。"] },
-  { id:"J55", name:"大黒屋光太郎", nameHtml:"\u003cruby>大黒屋\u003crt>たいこくや\u003c/rt>\u003c/ruby>\u003cruby>光太郎\u003crt>こうたろう\u003c/rt>\u003c/ruby>", reading:"たいこくやこうたろう", years:"1751〜1828年", country:"日本", field:"漂流者・西洋研究者", photo:null, quotes:[], legacyId:"J55", legacyQuotes:["嵐の海を十年、それでも祖国を忘れたことはなかった。","異国の皇帝にまで謁見した日本人は、わたしが初めてであろう。","生きて帰れたことこそ、何よりの宝である。"] },
+  { id:"J55", name:"大黒屋光太夫", nameHtml:"\u003cruby>大黒屋\u003crt>だいこくや\u003c/rt>\u003c/ruby>\u003cruby>光太夫\u003crt>こうだゆう\u003c/rt>\u003c/ruby>", reading:"だいこくやこうだゆう", years:"1751〜1828年", country:"日本", field:"漂流者・西洋研究者", photo:null, quotes:[], legacyId:"J55", legacyQuotes:["嵐の海を十年、それでも祖国を忘れたことはなかった。","異国の皇帝にまで謁見した日本人は、わたしが初めてであろう。","生きて帰れたことこそ、何よりの宝である。"] , legacyReading:"たいこくやこうたろう", legacyName:"大黒屋光太郎", legacyNameHtml:"\u003cruby>大黒屋\u003crt>たいこくや\u003c/rt>\u003c/ruby>\u003cruby>光太郎\u003crt>こうたろう\u003c/rt>\u003c/ruby>" },
   { id:"J56", name:"写楽", nameHtml:"\u003cruby>写楽\u003crt>しゃらく\u003c/rt>\u003c/ruby>", reading:"しゃらく", years:"生没年不詳（江戸後期）", country:"日本", field:"浮世絵師", photo:null, quotes:[], legacyId:"J56", legacyQuotes:["役者の一瞬の表情にこそ、真実がある。","わずか十ヶ月の活動であっても、悔いはない。","誰であったかは謎のままでよい。絵がすべてを語る。"] },
   { id:"J57", name:"松平定信", nameHtml:"\u003cruby>松平\u003crt>まつだいら\u003c/rt>\u003c/ruby>\u003cruby>定信\u003crt>さだのぶ\u003c/rt>\u003c/ruby>", reading:"まつだいらさだのぶ", years:"1735〜1807年", country:"日本", field:"政治家・改革者", photo:null, quotes:[], legacyId:"J57", legacyQuotes:["質素倹約こそ、この国を立て直す道である。","出る杭は打たれても、正しいと思う政（まつりごと）は貫く。","学問と武芸、両方を怠ってはならぬ。"] },
   { id:"J58", name:"高田屋嘉兵衛", nameHtml:"\u003cruby>高田屋\u003crt>たかたや\u003c/rt>\u003c/ruby>\u003cruby>嘉兵衛\u003crt>かへえ\u003c/rt>\u003c/ruby>", reading:"たかたやかへえ", years:"1769〜1827年", country:"日本", field:"商人・実業家", photo:null, quotes:[], legacyId:"J58", legacyQuotes:["商人にも、国のためにできることがある。","異国に捕らわれても、日本人としての誇りは失わぬ。","北の海を切り開くことが、わが使命である。"] },
@@ -512,8 +515,8 @@ var PEOPLE = [
   { id:"J66", name:"山脇東洋", nameHtml:"\u003cruby>山脇\u003crt>やまわき\u003c/rt>\u003c/ruby>\u003cruby>東洋\u003crt>とうよう\u003c/rt>\u003c/ruby>", reading:"やまわきとうよう", years:"1706〜1762年", country:"日本", field:"解剖学者・医学者", photo:null, quotes:[], legacyId:"J66", legacyQuotes:["この目で人の体を確かめねば、本当の医学は始まらぬ。","古い医学書の教えと、実際の体の姿は、こんなにも違っていた。","腑分け（ふわけ）の記録を残すことが、後の世の医学を進める。"] },
   { id:"J67", name:"近藤重蔵", nameHtml:"\u003cruby>近藤\u003crt>こんどう\u003c/rt>\u003c/ruby>\u003cruby>重蔵\u003crt>じゅうぞう\u003c/rt>\u003c/ruby>", reading:"こんどうじゅうぞう", years:"1771〜1829年", country:"日本", field:"探検家", photo:null, quotes:[], legacyId:"J67", legacyQuotes:["蝦夷地の北の果てに、日本の証を立ててきた。","国境の地を、この足でしかと確かめねばならぬ。","未知の土地への恐れより、知りたいという思いが勝った。"] },
   { id:"J68", name:"中野重右衛門", nameHtml:"\u003cruby>中野\u003crt>なかの\u003c/rt>\u003c/ruby>\u003cruby>重右衛門\u003crt>じゅうえもん\u003c/rt>\u003c/ruby>", reading:"なかのじゅうえもん", years:"1700年代", country:"日本", field:"商人・実業家", photo:null, quotes:[], legacyId:"J68", legacyQuotes:["商いは、信用がすべてである。","異国との交易にも、日本人の知恵は通用する。","誠実な商いこそ、長く続く商いである。"] },
-  { id:"J69", name:"久坂玄瑞", nameHtml:"\u003cruby>久坂\u003crt>ひさか\u003c/rt>\u003c/ruby>\u003cruby>玄瑞\u003crt>げんずい\u003c/rt>\u003c/ruby>", reading:"ひさかげんずい", years:"1838〜1864年", country:"日本", field:"幕末の志士", photo:null, quotes:[], legacyId:"J69", legacyQuotes:["長州の未来のために、この命を捧げる。","たとえ若くして倒れようとも、志は後の者が継いでくれよう。","攘夷か開国かではなく、この国をどう守るかが肝要だ。"] },
-  { id:"J70", name:"大久保利通", nameHtml:"\u003cruby>大久保\u003crt>おおくぼ\u003c/rt>\u003c/ruby>\u003cruby>利通\u003crt>としみち\u003c/rt>\u003c/ruby>", reading:"おおくねとしみち", years:"1830〜1878年", country:"日本", field:"政治家", photo:null, quotes:[], legacyId:"J70", legacyQuotes:["富国強兵こそ、この国が生き残る道である。","改革には、時に非情の決断も必要となる。","西郷とともに歩んだ道を、わたしは忘れぬ。"] },
+  { id:"J69", name:"久坂玄瑞", nameHtml:"\u003cruby>久坂\u003crt>くさか\u003c/rt>\u003c/ruby>\u003cruby>玄瑞\u003crt>げんずい\u003c/rt>\u003c/ruby>", reading:"くさかげんずい", years:"1838〜1864年", country:"日本", field:"幕末の志士", photo:null, quotes:[], legacyId:"J69", legacyQuotes:["長州の未来のために、この命を捧げる。","たとえ若くして倒れようとも、志は後の者が継いでくれよう。","攘夷か開国かではなく、この国をどう守るかが肝要だ。"] , legacyReading:"ひさかげんずい", legacyNameHtml:"\u003cruby>久坂\u003crt>ひさか\u003c/rt>\u003c/ruby>\u003cruby>玄瑞\u003crt>げんずい\u003c/rt>\u003c/ruby>" },
+  { id:"J70", name:"大久保利通", nameHtml:"\u003cruby>大久保\u003crt>おおくぼ\u003c/rt>\u003c/ruby>\u003cruby>利通\u003crt>としみち\u003c/rt>\u003c/ruby>", reading:"おおくぼとしみち", years:"1830〜1878年", country:"日本", field:"政治家", photo:null, quotes:[], legacyId:"J70", legacyQuotes:["富国強兵こそ、この国が生き残る道である。","改革には、時に非情の決断も必要となる。","西郷とともに歩んだ道を、わたしは忘れぬ。"] , legacyReading:"おおくねとしみち" },
   { id:"J71", name:"伊藤博文", nameHtml:"\u003cruby>伊藤\u003crt>いとう\u003c/rt>\u003c/ruby>\u003cruby>博文\u003crt>ひろぶみ\u003c/rt>\u003c/ruby>", reading:"いとうひろぶみ", years:"1841〜1909年", country:"日本", field:"政治家", photo:null, quotes:[], legacyId:"J71", legacyQuotes:["この国を、欧米に負けぬ近代国家にする。","憲法を制定し、この国に法の秩序をもたらす。","国のために、わが身を惜しまぬ。"] },
   { id:"J72", name:"山県有朋", nameHtml:"\u003cruby>山県\u003crt>やまがた\u003c/rt>\u003c/ruby>\u003cruby>有朋\u003crt>ありとも\u003c/rt>\u003c/ruby>", reading:"やまがたありとも", years:"1838〜1922年", country:"日本", field:"政治家・軍人", photo:null, quotes:[], legacyId:"J72", legacyQuotes:["軍隊の近代化なくして、この国の独立は守れぬ。","国家のためには、時に厳しい規律も必要である。","富国強兵の道を、着実に歩まねばならぬ。"] },
   { id:"J73", name:"榎本武揚", nameHtml:"\u003cruby>榎本\u003crt>えのもと\u003c/rt>\u003c/ruby>\u003cruby>武揚\u003crt>たけあき\u003c/rt>\u003c/ruby>", reading:"えのもとたけあき", years:"1836〜1908年", country:"日本", field:"幕末の志士・政治家", photo:null, quotes:[], legacyId:"J73", legacyQuotes:["たとえ賊軍と呼ばれようとも、武士としての筋を通す。","五稜郭に立てこもってでも、この信念は曲げぬ。","敗れた者にも、新しい国づくりに力を尽くす道はある。"] },
@@ -1584,7 +1587,9 @@ function buildDetailHtml(person, episodes){
       '<input class="rate-range-compact" id="rate-range" type="range" min="0.5" max="1.5" step="0.1" value="1.0" aria-label="読み上げの速さ">' +
       '<span class="rate-value-compact"><span id="rate-value">1.0</span>倍</span>' +
     '</div>' +
-    '<p id="speech-warning" class="speech-warning" hidden>お使いのブラウザは音声読み上げに対応していないようです。</p>' +
+    '<div class="speech-options"><label for="speech-voice">読み上げの声</label><select id="speech-voice" aria-describedby="speech-warning"></select></div>' +
+    '<p id="speech-warning" class="speech-warning" hidden></p>' +
+    '<p id="speech-status" class="speech-status" role="status" aria-live="polite"></p>' +
     episodesHtml +
     quotesSectionHtml +
     '<section class="controls" aria-label="表示の設定">' +
@@ -1600,9 +1605,137 @@ function buildDetailHtml(person, episodes){
   );
 }
 
-var speechSupported = 'speechSynthesis' in window;
-var currentRate = 1.0;
-var isSpeaking = false;
+/* 音読用の読み。通常の文章は漢字かな交じりのままにし、固有名詞と難読語だけを補正する。
+   優先順位: 本文のruby > 話ごとの指定 > 共通辞書 > 既存のルビから集めた読み。
+   本文・見出しの表示データは変更しない。単漢字の読みは文脈が違うので他の場所へ流用しない。 */
+var SPEECH_READINGS = {
+  "源頼朝":"みなもとのよりとも", "源義朝":"みなもとのよしとも", "源義経":"みなもとのよしつね",
+  "平清盛":"たいらのきよもり", "藤原道長":"ふじわらのみちなが", "菅原道真":"すがわらのみちざね",
+  "蘇我稲目":"そがのいなめ", "二宮金次郎":"にのみやきんじろう", "二宮尊徳":"にのみやそんとく",
+  "伊達政宗":"だてまさむね", "大黒屋光太夫":"だいこくやこうだゆう",
+  "北里研究所":"きたさとけんきゅうじょ", "慶應義塾大学":"けいおうぎじゅくだいがく",
+  "適塾":"てきじゅく", "緒方洪庵":"おがたこうあん", "桂川甫周":"かつらがわほしゅう",
+  "北槎聞略":"ほくさぶんりゃく", "神昌丸":"しんしょうまる", "仁和寺":"にんなじ",
+  "比叡山":"ひえいざん", "延暦寺":"えんりゃくじ", "高野山":"こうやさん",
+  "長州藩":"ちょうしゅうはん", "薩摩藩":"さつまはん", "土佐藩":"とさはん",
+  "会津藩":"あいづはん", "蝦夷地":"えぞち", "樺太":"からふと", "択捉島":"えとろふとう",
+  "国後島":"くなしりとう", "根室":"ねむろ", "出島":"でじま", "近江":"おうみ",
+  "尊王攘夷":"そんのうじょうい", "戊辰戦争":"ぼしんせんそう", "禁門の変":"きんもんのへん",
+  "壇ノ浦":"だんのうら", "壬申の乱":"じんしんのらん", "乙巳の変":"いっしのへん",
+  "遣唐使":"けんとうし", "勘合貿易":"かんごうぼうえき", "御成敗式目":"ごせいばいしきもく",
+  "法華経":"ほけきょう", "正法眼蔵":"しょうぼうげんぞう", "風姿花伝":"ふうしかでん",
+  "群書類従":"ぐんしょるいじゅう", "舎密開宗":"せいみかいそう", "解体新書":"かいたいしんしょ",
+  "養生訓":"ようじょうくん", "不忍池":"しのばずのいけ", "南総里見八犬伝":"なんそうさとみはっけんでん",
+  "iPS細胞":"アイピーエスさいぼう", "IPS細胞":"アイピーエスさいぼう",
+  "DNA":"ディーエヌエー", "RNA":"アールエヌエー", "LED":"エルイーディー",
+  "DDT":"ディーディーティー", "AT&T":"エーティーアンドティー",
+  "量子力学":"りょうしりきがく", "量子電磁力学":"りょうしでんじりきがく",
+  "素粒子":"そりゅうし", "原子核":"げんしかく", "陽電子":"ようでんし",
+  "青色発光ダイオード":"あおいろはっこうダイオード", "窒化ガリウム":"ちっかガリウム",
+  "不斉合成":"ふせいごうせい", "有機合成":"ゆうきごうせい", "質量分析":"しつりょうぶんせき",
+  "触媒":"しょくばい", "抗体":"こうたい", "免疫療法":"めんえきりょうほう",
+  "結核":"けっかく", "脚気":"かっけ", "壊血病":"かいけつびょう", "狂犬病":"きょうけんびょう",
+  "三重の障がい":"さんじゅうのしょうがい", "盲ろう者":"もうろうしゃ"
+};
+// 同じ漢字でも、その話だけ読みが異なる場合は { "話ID": { "語句": "よみ" } } で指定する。
+var SPEECH_EPISODE_READINGS = {};
+var speechReadingCache = null;
+
+function decodeSpeechHtml(text){
+  return text.replace(/&(#x[0-9a-f]+|#\d+|amp|lt|gt|quot|apos);/gi, function(entity, code){
+    var named = {amp:'&', lt:'<', gt:'>', quot:'"', apos:"'"};
+    if (code.charAt(0) !== '#') return named[code.toLowerCase()];
+    var value = code.charAt(1).toLowerCase() === 'x' ? parseInt(code.slice(2),16) : parseInt(code.slice(1),10);
+    return value > 0 && value <= 0x10ffff ? String.fromCodePoint(value) : entity;
+  });
+}
+
+function rubyReadings(html){
+  var entries = [];
+  html.replace(/<ruby\b[^>]*>([\s\S]*?)<\/ruby>/gi, function(_, content){
+    var rt = content.match(/<rt\b[^>]*>([\s\S]*?)<\/rt>/i);
+    if (!rt) return _;
+    var base = content.replace(/<(?:rt|rp)\b[^>]*>[\s\S]*?<\/(?:rt|rp)>/gi, '').replace(/<[^>]+>/g, '');
+    entries.push([decodeSpeechHtml(base), decodeSpeechHtml(rt[1].replace(/<[^>]+>/g, ''))]);
+    return _;
+  });
+  return entries;
+}
+
+function rubySpeechText(html){
+  return decodeSpeechHtml(html.replace(/<ruby\b[^>]*>([\s\S]*?)<\/ruby>/gi, function(original, content){
+    var rt = content.match(/<rt\b[^>]*>([\s\S]*?)<\/rt>/i);
+    return rt ? rt[1] : content;
+  }).replace(/<rp\b[^>]*>[\s\S]*?<\/rp>/gi,'').replace(/<[^>]+>/g,''));
+}
+
+function buildSpeechReadings(person, episode){
+  if (!speechReadingCache){
+    var collected = new Map();
+    EPISODES.forEach(function(ep){
+      rubyReadings(ep.bodyHtml).forEach(function(pair){
+        if (pair[0].length < 2 || !/[一-鿿々]/.test(pair[0])) return;
+        if (collected.has(pair[0]) && collected.get(pair[0]) !== pair[1]) collected.set(pair[0], null);
+        else if (!collected.has(pair[0])) collected.set(pair[0], pair[1]);
+      });
+    });
+    PEOPLE.forEach(function(p){
+      // 人名は名前全体を登録。名字の一部が他の単語に混ざる誤変換を避ける。
+      var html = p.nameHtml.split('（')[0];
+      var name = decodeSpeechHtml(html.replace(/<rt>[\s\S]*?<\/rt>/g,'').replace(/<[^>]+>/g,''));
+      if (/[一-鿿々]/.test(name)) collected.set(name, rubySpeechText(html));
+    });
+    speechReadingCache = Array.from(collected).filter(function(pair){ return pair[1] && pair[0] !== pair[1]; });
+  }
+  var map = new Map(speechReadingCache.map(function(pair){ return [pair[0], {reading:pair[1], boundary:false}]; }));
+  // 本人の名字・名前だけで登場する箇所にも対応。単漢字は自動置換しない。
+  rubyReadings(person.nameHtml).forEach(function(pair){
+    if (pair[0].length >= 2 && !map.has(pair[0])) map.set(pair[0], {reading:pair[1], boundary:true});
+  });
+  [SPEECH_READINGS, SPEECH_EPISODE_READINGS[episode.id] || {}].forEach(function(dictionary){
+    Object.keys(dictionary).forEach(function(word){ map.set(word, {reading:dictionary[word], boundary:false}); });
+  });
+  return Array.from(map).sort(function(a,b){ return b[0].length - a[0].length; });
+}
+
+function applySpeechReadings(text, entries){
+  var result = '';
+  for (var i = 0; i < text.length;){
+    var match = entries.find(function(entry){
+      if (text.slice(i,i+entry[0].length) !== entry[0]) return false;
+      return !entry[1].boundary || !/[一-鿿々]/.test((text[i-1] || '') + (text[i+entry[0].length] || ''));
+    });
+    if (match){ result += match[1].reading; i += match[0].length; }
+    else { result += text[i]; i++; }
+  }
+  return result;
+}
+
+function buildSpeechChunks(person, episodes){
+  var chunks = [];
+  episodes.forEach(function(ep){
+    var entries = buildSpeechReadings(person, ep);
+    [ep.title + '。', rubySpeechText(ep.bodyHtml)].forEach(function(text){
+      // 一文ずつ渡し、長い文章でも続きから再生・設定変更できるようにする。
+      var sentences = text.match(/[^。！？!?\n]+[。！？!?]*[」』）)]*|[。！？!?]+/g) || [];
+      sentences.forEach(function(sentence){
+        var spoken = applySpeechReadings(sentence,entries).trim();
+        if (spoken) chunks.push(spoken);
+      });
+    });
+  });
+  return chunks;
+}
+
+function getJapaneseSpeechVoices(){
+  return window.speechSynthesis.getVoices().filter(function(voice){
+    return /^ja(?:[-_]|$)/i.test(voice.lang) && voice.localService;
+  }).sort(function(a,b){ return Number(b.default) - Number(a.default) || a.name.localeCompare(b.name,'ja'); });
+}
+
+var speechSupported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+var selectedSpeechVoice = '';
+var disposeSpeechControls = null;
 
 function bindDetailControls(person, episodes){
   var sizeMap = { small:{ body:'16px', title:'19px' }, medium:{ body:'18px', title:'22px' }, large:{ body:'22px', title:'26px' } };
@@ -1625,54 +1758,130 @@ function bindDetailControls(person, episodes){
   var rateRange = document.getElementById('rate-range');
   var rateValue = document.getElementById('rate-value');
   var warning = document.getElementById('speech-warning');
-
-  // 読み上げ用テキストは「ふりがな無しの本文」を使う（rubyの読みを二重に読まないため）
-  var speechText = episodes.map(function(ep){ return ep.title + '。' + ep.body; }).join(' ');
+  var voiceSelect = document.getElementById('speech-voice');
+  var status = document.getElementById('speech-status');
 
   if (!speechSupported){
+    warning.textContent = 'このブラウザは音声読み上げに対応していません。';
     warning.hidden = false;
-    playBtn.disabled = true; pauseBtn.disabled = true; stopBtn.disabled = true; rateRange.disabled = true;
+    playBtn.disabled = true; pauseBtn.disabled = true; stopBtn.disabled = true; rateRange.disabled = true; voiceSelect.disabled = true;
     return;
   }
 
-  function speakFromStart(){
-    window.speechSynthesis.cancel();
-    var utterance = new SpeechSynthesisUtterance(speechText);
-    utterance.lang = 'ja-JP';
-    utterance.rate = currentRate;
-    utterance.onend = function(){ isSpeaking = false; };
-    window.speechSynthesis.speak(utterance);
-    isSpeaking = true;
+  var synth = window.speechSynthesis;
+  var chunks = buildSpeechChunks(person, episodes);
+  var voices = [];
+  var index = 0;
+  var generation = 0;
+  var active = false;
+  var paused = false;
+  var currentRate = 1.0;
+  var currentUtterance = null;
+  var disposed = false;
+
+  function voiceKey(voice){ return voice.voiceURI || voice.name + '|' + voice.lang; }
+  function updateButtons(){
+    playBtn.disabled = !voices.length || !chunks.length;
+    pauseBtn.disabled = !active || paused;
+    stopBtn.disabled = !active && index === 0;
+  }
+  function cancelPlayback(){
+    generation++;
+    active = false;
+    paused = false;
+    currentUtterance = null;
+    synth.cancel();
+    updateButtons();
+  }
+  function refreshVoices(){
+    if (disposed) return;
+    voices = getJapaneseSpeechVoices();
+    voiceSelect.innerHTML = voices.length ? voices.map(function(voice){
+      return '<option value="' + escapeHtml(voiceKey(voice)) + '">' + escapeHtml(voice.name) + '</option>';
+    }).join('') : '<option value="">日本語音声がありません</option>';
+    var preferred = voices.find(function(voice){ return voiceKey(voice) === selectedSpeechVoice; }) || voices[0];
+    if (preferred){ selectedSpeechVoice = voiceKey(preferred); voiceSelect.value = selectedSpeechVoice; }
+    voiceSelect.disabled = !voices.length;
+    warning.hidden = !!voices.length;
+    warning.textContent = 'この端末で使える日本語音声を読み込んでいます。声が表示されない場合は、端末の設定で日本語の読み上げ音声を追加してください。';
+    updateButtons();
+  }
+  function speakFrom(startIndex){
+    cancelPlayback();
+    var voice = voices.find(function(v){ return voiceKey(v) === voiceSelect.value; });
+    if (!voice || !chunks.length) return;
+    active = true;
+    index = startIndex;
+    var token = generation;
+    function speakNext(){
+      if (disposed || token !== generation) return;
+      if (index >= chunks.length){
+        active = false; currentUtterance = null; index = 0;
+        status.textContent = '読み上げが終わりました。';
+        updateButtons();
+        return;
+      }
+      currentUtterance = new SpeechSynthesisUtterance(chunks[index]);
+      currentUtterance.lang = voice.lang;
+      currentUtterance.voice = voice;
+      currentUtterance.rate = currentRate;
+      currentUtterance.onend = function(){
+        if (token !== generation || disposed) return;
+        index++; speakNext();
+      };
+      currentUtterance.onerror = function(event){
+        if (token !== generation || disposed) return;
+        cancelPlayback();
+        status.textContent = event.error === 'not-allowed' ? '再生ボタンをもう一度押してください。' : '読み上げを続けられませんでした。声を選び直して再生してください。';
+      };
+      status.textContent = '読み上げ中';
+      updateButtons();
+      synth.speak(currentUtterance);
+    }
+    speakNext();
   }
 
   rateRange.addEventListener('input', function(){
     currentRate = parseFloat(rateRange.value);
     rateValue.textContent = currentRate.toFixed(1);
-    if (isSpeaking) speakFromStart();
+    if (active && !paused) speakFrom(index);
+    else if (paused){ cancelPlayback(); status.textContent = '設定を変更しました。再生すると、この文から続けます。'; }
+  });
+
+  voiceSelect.addEventListener('change', function(){
+    selectedSpeechVoice = voiceSelect.value;
+    if (active && !paused) speakFrom(index);
+    else if (paused){ cancelPlayback(); status.textContent = '設定を変更しました。再生すると、この文から続けます。'; }
   });
 
   playBtn.addEventListener('click', function(){
-    if (window.speechSynthesis.paused){
-      window.speechSynthesis.resume();
-      isSpeaking = true;
+    if (active && paused){
+      synth.resume(); paused = false; status.textContent = '読み上げ中'; updateButtons();
+    } else if (!active){
+      speakFrom(index);
     } else {
-      speakFromStart();
+      speakFrom(0);
     }
   });
 
   pauseBtn.addEventListener('click', function(){
-    if (window.speechSynthesis.speaking) window.speechSynthesis.pause();
+    if (active){ synth.pause(); paused = true; status.textContent = '一時停止中'; updateButtons(); }
   });
 
   stopBtn.addEventListener('click', function(){
-    window.speechSynthesis.cancel();
-    isSpeaking = false;
+    index = 0; cancelPlayback(); status.textContent = '停止しました。';
   });
+  synth.addEventListener('voiceschanged', refreshVoices);
+  refreshVoices();
+  disposeSpeechControls = function(){
+    disposed = true;
+    cancelPlayback();
+    synth.removeEventListener('voiceschanged', refreshVoices);
+  };
 }
 
 function openDetail(personId){
-  window.speechSynthesis && window.speechSynthesis.cancel();
-  isSpeaking = false;
+  if (disposeSpeechControls){ disposeSpeechControls(); disposeSpeechControls = null; }
   currentPersonId = personId;
   var person = PEOPLE.find(function(p){ return p.id === personId; });
   var episodes = EPISODES.filter(function(e){ return e.personId === personId; });
@@ -1683,8 +1892,7 @@ function openDetail(personId){
 }
 
 function closeDetail(){
-  window.speechSynthesis && window.speechSynthesis.cancel();
-  isSpeaking = false;
+  if (disposeSpeechControls){ disposeSpeechControls(); disposeSpeechControls = null; }
   currentPersonId = null;
   detailSection.hidden = true;
   detailSection.innerHTML = '';

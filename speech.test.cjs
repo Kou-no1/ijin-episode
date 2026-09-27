@@ -52,7 +52,7 @@ test('ruby readings replace their bases exactly once, including fallback parenth
 
 test('corrected names and their old records remain available',()=>{
   const {context:c,person,episodes} = setup();
-  for(const [id,reading] of Object.entries({N04:'のよりりょうじ',N17:'まなべしゅくろう',J04:'くうかい',J69:'くさかげんずい',J70:'おおくぼとしみち',J55:'だいこくやこうだゆう'})) {
+  for(const [id,reading] of Object.entries({N04:'のよりりょうじ',N17:'まなべしゅくろう',J04:'くうかい',J69:'くさかげんずい',J70:'おおくぼとしみち',J55:'だいこくやこうだゆう',J59:'たむららんすい'})) {
     assert.equal(person(id).reading,reading);
     assert(person(id).legacyReading);
     assert(c.buildSpeechChunks(person(id),episodes(id)).join('').includes(reading),id);
@@ -64,8 +64,8 @@ test('corrected names and their old records remain available',()=>{
 test('existing ruby vocabulary is also used in legacy episodes and headings',()=>{
   const {context:c,person,episodes} = setup();
   const old = episodes('001').find(e=>e.source==='legacy');
-  assert(!old.bodyHtml.includes('<ruby>'));
-  const text=c.buildSpeechChunks(person('001'),[old]).join('');
+  const fallback={...old,titleHtml:undefined,bodyHtml:old.body};
+  const text=c.buildSpeechChunks(person('001'),[fallback]).join('');
   assert(text.includes('のぐちひでよ'));
   assert(text.includes('いろり'));
   assert(text.includes('おうねつびょう'));
@@ -80,10 +80,11 @@ test('longest names win; short personal names do not change other kanji words',(
 
 test('per-episode overrides are scoped; explicit ruby takes precedence',()=>{
   const {context:c,person}=setup();
+  const original=c.applySpeechReadings('上方',c.buildSpeechReadings(person('001'),{id:'other'}));
   c.SPEECH_EPISODE_READINGS['test-01']={'上方':'かみがた'};
   const ep={id:'test-01',title:'上方',bodyHtml:'上方。<ruby>上方<rt>じょうほう</rt></ruby>。'};
   assert.equal(c.buildSpeechChunks(person('001'),[ep]).join(''),'かみがた。かみがた。じょうほう。');
-  assert.equal(c.applySpeechReadings('上方',c.buildSpeechReadings(person('001'),{id:'other'})),'上方');
+  assert.equal(c.applySpeechReadings('上方',c.buildSpeechReadings(person('001'),{id:'other'})),original);
 });
 
 test('all 296 episodes produce speech without HTML markup, with unchanged catalog data',()=>{
@@ -93,10 +94,26 @@ test('all 296 episodes produce speech without HTML markup, with unchanged catalo
     const chunks=c.buildSpeechChunks(person(ep.personId),[ep]);
     assert(chunks.length>1,ep.id);
     assert(!/<\/?(?:ruby|rt|rp)>|&amp;/.test(chunks.join('')),ep.id);
+    assert(!/[\u3400-\u9fff々〆〇]/.test(chunks.join('')),ep.id+' has unread kanji');
+    assert.equal(chunks[0],c.rubySpeechText(ep.titleHtml)+'。',ep.id+' heading');
   }
   assert.equal(c.EPISODES.length,296);
   assert.equal(c.PEOPLE.length,232);
   assert.equal(JSON.stringify(c.EPISODES),before);
+});
+
+test('contextual readings for technical terms, names, compounds and counters are explicit',()=>{
+  const {context:c}=setup();
+  function reading(base) {
+    return c.EPISODES.flatMap(ep=>c.rubyReadings(ep.bodyHtml)).filter(pair=>pair[0]===base).map(pair=>pair[1]);
+  }
+  for (const [base,expected] of Object.entries({共著者:'きょうちょしゃ',東芝:'とうしば',陽子:'ようし',井深大:'いぶかまさる',大谷吉継:'おおたによしつぐ',田村藍水:'たむららんすい',医学生:'いがくせい',明徳:'めいとく',学問所:'がくもんじょ',一歩:'いっぽ',一冊:'いっさつ',第一国立銀行:'だいいちこくりつぎんこう','150日間':'ひゃくごじゅうにちかん','4000万':'よんせんまん'})) {
+    const actual=reading(base);
+    assert(actual.length,base+' is covered');
+    assert(actual.every(value=>value===expected),base+': '+actual.join(', '));
+  }
+  const synthetic={id:'test-ruby',title:'共著者',titleHtml:'<ruby>共著者<rt>きょうちょしゃ</rt></ruby>',bodyHtml:'<ruby>三重<rt>さんじゅう</rt></ruby>の<ruby>障<rt>しょう</rt></ruby>がい。'};
+  assert.equal(c.buildSpeechChunks(c.PEOPLE[0],[synthetic]).join(''),'きょうちょしゃ。さんじゅうのしょうがい。');
 });
 
 test('voice list can arrive late; only local Japanese voices are selectable',()=>{

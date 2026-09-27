@@ -30,6 +30,7 @@ js_string = r'"(?:\\.|[^"\\])*"'
 episode_pattern = re.compile(
     rf"\{{ id:({js_string}), personId:({js_string}), title:({js_string}), "
     rf"tags:(\[[^\]]*\]),\s*body:({js_string}),\s*bodyHtml:({js_string})"
+    rf", titleHtml:({js_string})"
     rf"(?:, source:({js_string}), sourceId:({js_string}))? \}}",
     re.S,
 )
@@ -54,13 +55,14 @@ if len(episodes) != episodes_block.count("{ id:"):
 
 episode_ids = []
 episode_person_ids = set()
-for raw_id, raw_person_id, raw_title, raw_tags, raw_body, raw_html, raw_source, raw_source_id in episodes:
+for raw_id, raw_person_id, raw_title, raw_tags, raw_body, raw_html, raw_title_html, raw_source, raw_source_id in episodes:
     eid = json.loads(raw_id)
     person_id = json.loads(raw_person_id)
     title = json.loads(raw_title)
     tags = json.loads(raw_tags)
     body = json.loads(raw_body)
     body_html = json.loads(raw_html)
+    title_html = json.loads(raw_title_html)
     origin = json.loads(raw_source) if raw_source else None
     episode_ids.append(eid)
     episode_person_ids.add(person_id)
@@ -74,10 +76,20 @@ for raw_id, raw_person_id, raw_title, raw_tags, raw_body, raw_html, raw_source, 
         fail(f"旧版の元IDがありません: {eid}")
     if origin is None and len(tags) != 3:
         fail(f"新形式のタグは3件にしてください: {eid}")
-    plain = re.sub(r"<rt>.*?</rt>", "", body_html)
-    plain = html.unescape(plain.replace("<ruby>", "").replace("</ruby>", ""))
-    if plain != body:
-        fail(f"bodyとbodyHtmlが不一致: {eid}")
+    for label, original, markup in [("body", body, body_html), ("title", title, title_html)]:
+        ruby_pattern = r"<ruby>([^<>]+)<rt>([^<>]+)</rt></ruby>"
+        pairs = re.findall(ruby_pattern, markup)
+        outside = re.sub(ruby_pattern, "", markup)
+        if re.search(r"[\u3400-\u9fff々〆〇]", html.unescape(outside)):
+            fail(f"{label}にルビのない漢字: {eid}")
+        if re.search(r"[<>]", outside):
+            fail(f"{label}に不正なルビタグ: {eid}")
+        for base, reading in pairs:
+            if not re.search(r"[ぁ-ゖァ-ヶ]", html.unescape(reading)) or re.search(r"[\u3400-\u9fff々〆〇]", html.unescape(reading)):
+                fail(f"{label}の読みを確認: {eid} {base}={reading}")
+        plain = html.unescape(re.sub(ruby_pattern, lambda m: m[1], markup))
+        if plain != original:
+            fail(f"{label}と{label}Htmlが不一致: {eid}")
     if origin != "legacy" and not (250 <= len(body) <= 420):
         print("注意: 文字数", eid, len(body))
 

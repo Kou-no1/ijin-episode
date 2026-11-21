@@ -51,6 +51,21 @@
     .site-intro{ grid-column:1 / -1; }
   }
 
+  .region-tabs{
+    display:grid; grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:8px; margin:0 0 12px;
+  }
+  .region-tab{
+    min-height:56px; padding:8px 4px; border:1px solid var(--color-border);
+    border-radius:12px; background:var(--color-card); color:var(--color-navy-dark);
+    font:700 clamp(15px, 3.7vw, 20px)/1.35 'BIZ UDPGothic', sans-serif; cursor:pointer;
+  }
+  .region-tab:hover{ border-color:var(--color-gold); }
+  .region-tab[aria-pressed="true"]{
+    background:var(--color-navy); border-color:var(--color-navy); color:#fff;
+  }
+  .region-tab:focus-visible{ outline:3px solid var(--color-gold); outline-offset:2px; }
+
   .toolbar{
     display:flex; flex-wrap:wrap; gap:10px; margin:20px 0 24px;
   }
@@ -129,6 +144,18 @@
   }
   .person-heading .portrait-art{ width:clamp(68px, 18vw, 112px); }
   .portrait-art--murasaki{ background:#EFE4EC; }
+  .portrait-figure{ margin:0; flex-shrink:0; display:grid; justify-items:center; gap:6px; }
+  .portrait-caption{ display:grid; justify-items:center; font-size:12px; line-height:1.35; }
+  .portrait-label{
+    padding:3px 8px; border:1px solid var(--color-border); border-radius:8px;
+    background:var(--color-bg); color:var(--color-navy-dark); font-weight:700;
+  }
+  .portrait-label rt{ font-size:0.6em; }
+  .portrait-reference{
+    display:inline-flex; align-items:center; min-height:28px;
+    color:var(--color-navy); text-underline-offset:0.18em;
+  }
+  .portrait-reference:focus-visible{ outline:3px solid var(--color-gold); outline-offset:2px; }
   .person-heading-text{ min-width:0; overflow-wrap:anywhere; }
   .person-name{
     font-family:'BIZ UDPGothic', sans-serif; font-weight:700; font-size:clamp(19px, 4.5vw, 26px);
@@ -216,6 +243,12 @@
     </div>
     <p class="site-intro">日本や世界の<ruby>偉人<rt>いじん</rt></ruby>たちは、どんなことに<ruby>挑戦<rt>ちょうせん</rt></ruby>し、どんな<ruby>工夫<rt>くふう</rt></ruby>をしてきたのかな？ 気になる人物やキーワードから、エピソードを読んでみよう。文章にはふりがながついていて、<ruby>音声<rt>おんせい</rt></ruby>でも聞けます。あなたの「やってみたい！」につながるヒントを見つけてね。</p>
   </header>
+
+  <div class="region-tabs" id="region-tabs" role="group" aria-label="人物を地域でしぼりこむ">
+    <button type="button" class="region-tab" data-region="all" aria-pressed="true" aria-controls="grid">すべて</button>
+    <button type="button" class="region-tab" data-region="japan" aria-pressed="false" aria-controls="grid">日本の偉人</button>
+    <button type="button" class="region-tab" data-region="foreign" aria-pressed="false" aria-controls="grid">外国の偉人</button>
+  </div>
 
   <section class="tag-cards" aria-label="キーワードでさがす">
     <button type="button" class="tag-cards-toggle" id="tag-cards-toggle" aria-expanded="false" aria-controls="tag-card-list">
@@ -2192,6 +2225,64 @@ function renderPersonPortrait(person, size, lazy = false) {
     (lazy ? ' loading="lazy" decoding="async"' : '') + '>';
 }
 
+// 肖像の精査で容貌を確認できなかった人物。資料がない項目は null。
+const IMAGINED_PORTRAIT_REFERENCES = {
+  "019": "https://jpsearch.go.jp/item/arc_books-bunko08_a0256",
+  "020": null,
+  "022": "https://khirin.rekihaku.ac.jp/en/pid/nmjh_collection/H-1660-47-20.html",
+  "041": "https://www.archives-nationales.culture.gouv.fr/evenements/1429-jeanne-darc-le-premier-portrait",
+  "042": "https://www.tnm.jp/modules/r_free_page/index.php?id=1732&lang=ja",
+  "053": "https://www.kyohaku.go.jp/jp/exhibitions/special/2026_genji/",
+  "N21": "https://ndlsearch.ndl.go.jp/books/R100000002-I000007284245",
+  "N25": "https://www.library.pref.osaka.jp/nakato/shotenji/20_saika.html",
+  "N26": "https://www.city.amagasaki.hyogo.jp/shisei/sogo_annai/special/1016881.html",
+  "N28": "https://www.kobayashi-issa.jp/about-issa",
+  "J26": "https://www.inari.or.jp/hideyori",
+  "J31": "https://www.pref.kagoshima.jp/ba08/kyoiku-bunka/bunkazai/soudan/denshou/documents/45220_20190328180935-1.pdf",
+  "J32": "https://artplatform.go.jp/ja/collections/W106387",
+  "J36": "https://www.library.yonezawa.yamagata.jp/dg/AA208.html",
+  "J41": "https://archives.pref.kanagawa.jp/2024/10/03/kanagawaken-7.pdf",
+  "J43": "https://www.denkoku-no-mori.yonezawa.yamagata.jp/pdf/nenpo/nenpo19.pdf",
+  "J49": "https://nagahama-rekihaku.jp/exhibit/599",
+  "J51": "https://www.city.shiroishi.miyagi.jp/soshiki/30/11967.html",
+  "J52": "https://www.city.wakayama.wakayama.jp/shisei/wakayama/1001005/1001031/1001032.html",
+  "J53": "https://www.pref.yamanashi.jp/documents/3558/13074170340.pdf",
+  "J54": "https://online.bunka.go.jp/heritages/detail/159831",
+  "J01": null,
+  "J02": "https://oumijingu.org/pages/90/",
+  "J03": "https://jodo.or.jp/newspaper/news/15926/",
+  "J07": "https://rekihaku.pref.hyogo.lg.jp/digital_museum/legend/story14/journey11/",
+  "J10": "https://www.nomadaibou.jp/",
+  "J12": null,
+  "J13": "https://kunishitei.bunka.go.jp/heritage/detail/201/10600",
+  "J20": "https://online.bunka.go.jp/heritages/detail/49958",
+  "J23": "https://da.dl.itc.u-tokyo.ac.jp/portal/node/1600587",
+  "J24": "https://rmda.kulib.kyoto-u.ac.jp/item/rb00033882",
+  "J56": "https://www.tnm.jp/jp/misc/press/docs/20110405sharaku_release.pdf",
+  "J59": "https://dl.ndl.go.jp/view/download/digidepo_8748136_po_geppo1409.pdf?contentNo=1#page=20",
+  "J61": "https://artplatform.go.jp/ja/collections/W1030246",
+  "J62": "https://saga-museum.jp/museum/files/kanpo086.pdf",
+  "J63": "https://www.tsuyama-yougaku.jp/udagawayouan.html",
+  "J66": "https://www.takedahp.or.jp/assets/data/about/reports/takeda108.pdf",
+  "J67": "https://adeac.jp/hakodate-city/catalog/mp000530-200010",
+  "J68": null,
+  "J69": "https://crd.ndl.go.jp/reference/entry/index.php?id=1000154546&page=ref_view"
+};
+
+function renderDetailPortrait(person) {
+  const portrait = renderPersonPortrait(person, 112);
+  if (!Object.hasOwn(IMAGINED_PORTRAIT_REFERENCES, person.id)) return portrait;
+
+  const reference = IMAGINED_PORTRAIT_REFERENCES[person.id];
+  const link = reference
+    ? '<a class="portrait-reference" href="' + escapeHtml(reference) +
+      '" target="_blank" rel="noopener noreferrer" aria-label="' +
+      escapeHtml(person.name + 'の参考資料（別のタブで開きます）') + '">参考資料</a>'
+    : '';
+  return '<figure class="portrait-figure">' + portrait + '<figcaption class="portrait-caption">' +
+    '<span class="portrait-label"><ruby>想像図<rt>そうぞうず</rt></ruby></span>' + link +
+    '</figcaption></figure>';
+}
 
 function renderCard(person){
   return '<button type="button" class="person-card" data-id="' + person.id + '">' +
@@ -2212,6 +2303,7 @@ function populateFieldSelect(){
 }
 
 var selectedTag = null;
+var selectedRegion = 'all';
 
 function getPersonTags(personId){
   var tags = [];
@@ -2258,10 +2350,17 @@ function initTagCardsToggle(){
   });
 }
 
+function matchesSelectedRegion(person){
+  if (selectedRegion === 'all') return true;
+  var isJapanese = person.country === '日本';
+  return selectedRegion === 'japan' ? isJapanese : !isJapanese;
+}
+
 function getFilteredPeople(){
   var query = searchInput.value.trim();
   var fieldValue = fieldSelect.value;
   return PEOPLE.filter(function(p){
+    if (!matchesSelectedRegion(p)) return false;
     var matchesQuery = !query || p.name.indexOf(query) !== -1 || p.reading.indexOf(query) !== -1 ||
       (p.legacyName && p.legacyName.indexOf(query) !== -1) ||
       (p.legacyReading && p.legacyReading.indexOf(query) !== -1);
@@ -2297,7 +2396,7 @@ function buildDetailHtml(person, episodes){
     '<div class="detail-top"><button type="button" class="close-btn" id="close-detail-btn">✕ 閉じる</button></div>' +
     '<div class="person-meta">' +
       '<div class="person-heading">' +
-        renderPersonPortrait(person, 112) +
+        renderDetailPortrait(person) +
         '<div class="person-heading-text">' +
           '<h2 class="person-name">' + person.nameHtml + '</h2>' +
           '<p class="person-sub">' + escapeHtml(person.years) + '・' + escapeHtml(person.country) + '・' + escapeHtml(person.field) + '</p>' +
@@ -2638,9 +2737,21 @@ grid.addEventListener('click', function(e){
 searchInput.addEventListener('input', renderGrid);
 fieldSelect.addEventListener('change', renderGrid);
 
+var regionTabs = document.getElementById('region-tabs');
+regionTabs.addEventListener('click', function(e){
+  var button = e.target.closest('button[data-region]');
+  if (!button || selectedRegion === button.dataset.region) return;
+  selectedRegion = button.dataset.region;
+  regionTabs.querySelectorAll('button[data-region]').forEach(function(tab){
+    tab.setAttribute('aria-pressed', String(tab === button));
+  });
+  renderGrid();
+});
+
 randomBtn.addEventListener('click', function(){
   var pool = getFilteredPeople();
-  if (!pool.length) pool = PEOPLE;
+  if (!pool.length) pool = PEOPLE.filter(matchesSelectedRegion);
+  if (!pool.length) return;
   var pick = pool[Math.floor(Math.random() * pool.length)];
   openDetail(pick.id);
 });

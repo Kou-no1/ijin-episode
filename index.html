@@ -1502,247 +1502,437 @@ function renderAvatar(person, size){
 
 /* 人物ID: 肌、髪色、髪型、ひげ、衣装、小物、装飾、衣装色。 */
 const PERSON_PORTRAITS = {
-  "001":["tan","ink","wavy","mustache","lab","flask","none","#527D7E"], // 野口英世
-  "006":["ivory","silver","bun","none","dress","flask","none","#766386"], // キュリー夫人
-  "007":["peach","white","wild","mustache","suit","atom","none","#5A6A85"], // アインシュタイン
+  "001":["tan","ink","swept","tuft","bowtie","flask","none","#514550"], // 野口英世
+  "006":["ivory","brown","lowBun","none","highNeck","flask","none","#65596F"], // キュリー夫人
+  "007":["peach","white","halo","walrus","suit","atom","none","#5A6A85"], // アインシュタイン
   "014":["ivory","silver","swept","none","suit","light","none","#8C6B47"], // エジソン
-  "026":["tan","ink","topknot","none","samurai","scroll","none","#416E72"], // 坂本龍馬
-  "029":["peach","ink","parted","none","kimono","book","none","#516583"], // 福澤諭吉
-  "030":["peach","white","swept","mustache","suit","abacus","none","#786468"], // 渋沢栄一
-  "031":["tan","ink","topknot","none","work","book","none","#748446"], // 二宮金次郎（尊徳）
-  "061":["ivory","brown","bun","none","dress","heart","ribbon","#80709D"], // ヘレン・ケラー
-  "002":["peach","silver","parted","mustache","lab","flask","round","#567764"], // 北里柴三郎
-  "003":["ivory","ink","parted","short","suit","flask","glasses","#548192"], // 志賀潔
-  "004":["tan","ink","swept","mustache","suit","flask","none","#895F5D"], // 高峰譲吉
-  "005":["peach","ink","parted","none","suit","atom","none","#50797E"], // 湯川秀樹
-  "008":["ivory","silver","long","none","robe","star","none","#62728E"], // ニュートン
-  "009":["ivory","white","bald","full","explorer","leaf","none","#7D8051"], // ダーウィン
-  "010":["peach","white","swept","full","robe","telescope","none","#9A624C"], // ガリレオ・ガリレイ
-  "011":["ivory","silver","parted","short","suit","flask","none","#4C7784"], // パスツール
-  "069":["tan","ink","crop","short","sport","bat","cap","#347577"], // イチロー
-  "012":["ivory","silver","parted","none","lab","flask","none","#687475"], // フレミング
-  "013":["peach","brown","parted","none","monk","leaf","round","#6E7852"], // メンデル
-  "015":["peach","brown","crop","mustache","suit","gear","cap","#706D85"], // ライト兄弟
+  "026":["tan","ink","shoulder","none","samurai","scroll","none","#4C4850"], // 坂本龍馬
+  "029":["peach","ink","slick","none","frock","book","none","#494C52"], // 福澤諭吉
+  "030":["peach","white","receding","none","bowtie","abacus","none","#665861"], // 渋沢栄一
+  "031":["tan","ink","closecrop","none","work","woodBook","none","#748446"], // 二宮金次郎（尊徳）
+  "061":["ivory","brown","lowBun","none","highNeck","book","none","#80709D"], // ヘレン・ケラー
+  "002":["peach","silver","receding","none","suit","flask","round","#45574F"], // 北里柴三郎
+  "003":["ivory","ink","parted","pencil","suit","flask","boater","#8A7960"], // 志賀潔
+  "004":["tan","silver","receding","walrus","suit","flask","round","#895F5D"], // 高峰譲吉
+  "005":["peach","ink","slick","none","suit","atom","none","#50797E"], // 湯川秀樹
+  "008":["ivory","silver","wig","none","frock","none","none","#62728E"], // ニュートン
+  "009":["ivory","white","receding","longFull","robe","leaf","none","#57534B"], // ダーウィン
+  "010":["peach","white","receding","full","frock","telescope","none","#554A51"], // ガリレオ・ガリレイ
+  "011":["ivory","silver","slick","pointed","suit","flask","none","#4E4852"], // パスツール
+  "069":["tan","ink","crop","tuft","sport","bat","cap","#2F5963"], // イチロー
+  "012":["ivory","silver","slick","none","suit","petri","none","#495562"], // フレミング
+  "013":["peach","brown","receding","none","cleric","pea","round","#545153"], // メンデル
+  "015":["peach","brown","parted","walrus","bowtie","airplane","none","#706D85"], // ライト兄弟
   "016":["ivory","white","wavy","full","suit","mic","none","#776240"], // グラハム・ベル
-  "017":["tan","ink","parted","mustache","work","gear","none","#426C7D"], // 豊田佐吉
-  "018":["peach","silver","topknot","none","kimono","gear","none","#7E5473"], // 田中久重
+  "017":["tan","ink","slick","walrus","suit","gear","none","#426C7D"], // 豊田佐吉
+  "018":["peach","white","receding","pointed","kimono","gear","none","#7E5473"], // 田中久重
   "019":["tan","ink","topknot","none","kimono","light","none","#71834E"], // 平賀源内
   "020":["peach","silver","parted","mustache","suit","gear","none","#805D49"], // カール・ベンツ
-  "021":["ivory","silver","wavy","none","robe","gear","none","#586F60"], // ジェームズ・ワット
-  "022":["peach","ink","long","goatee","court","scroll","eboshi","#826793"], // 聖徳太子
-  "023":["tan","ink","topknot","goatee","armor","fan","none","#8C554C"], // 織田信長
-  "024":["peach","ink","topknot","mustache","armor","fan","helmet","#A4793C"], // 豊臣秀吉
-  "025":["tan","ink","topknot","short","samurai","scroll","helmet","#607652"], // 徳川家康
-  "027":["tan","ink","crop","none","kimono","scroll","none","#876045"], // 西郷隆盛
-  "028":["peach","ink","topknot","none","samurai","ship","none","#4A7389"], // 勝海舟
-  "032":["peach","ink","topknot","none","kimono","map","none","#5F785C"], // 伊能忠敬
-  "033":["peach","ink","crop","none","kimono","book","none","#675F86"], // 吉田松陰
-  "034":["peach","ink","parted","mustache","suit","book","round","#65724D"], // 新渡戸稲造
-  "035":["ivory","ink","swept","short","suit","scroll","hat","#5F586F"], // リンカーン
-  "036":["peach","white","long","none","uniform","flag","none","#486B89"], // ワシントン
+  "021":["ivory","silver","shoulder","none","frock","gear","none","#586F60"], // ジェームズ・ワット
+  "022":["peach","ink","long","pointed","court","shaku","eboshi","#826793"], // 聖徳太子
+  "023":["tan","ink","chonmage","pointed","samurai","fan","none","#635B59"], // 織田信長
+  "024":["peach","ink","shaved","pencil","court","fan","eboshi","#A4793C"], // 豊臣秀吉
+  "025":["tan","ink","shaved","goatee","court","scroll","eboshi","#675344"], // 徳川家康
+  "027":["tan","ink","closecrop","none","samurai","scroll","none","#464954"], // 西郷隆盛
+  "028":["peach","silver","slick","none","kimono","ship","none","#4A7389"], // 勝海舟
+  "032":["peach","silver","receding","none","kimono","map","none","#5F785C"], // 伊能忠敬
+  "033":["peach","ink","receding","none","kimono","book","none","#675F86"], // 吉田松陰
+  "034":["peach","silver","swept","none","bowtie","book","round","#65724D"], // 新渡戸稲造
+  "035":["ivory","ink","swept","chin","bowtie","scroll","stovepipe","#5F586F"], // リンカーン
+  "036":["peach","white","queue","none","frock","flag","none","#495466"], // ワシントン
   "037":["brown","silver","bald","mustache","robe","leaf","round","#AA7950"], // ガンディー
   "038":["deep","ink","crop","mustache","suit","mic","none","#465F88"], // キング牧師
-  "039":["deep","silver","crop","none","dress","flag","none","#987544"], // マンデラ
-  "040":["tan","ink","bob","none","ancient","scroll","crown,earring","#6D5B8C"], // クレオパトラ
+  "039":["deep","silver","closecrop","none","patterned","flag","none","#917962"], // マンデラ
+  "040":["tan","ink","lowBun","none","ancient","scroll","diadem,earring","#6D5B8C"], // クレオパトラ
   "041":["ivory","brown","bob","none","armor","flag","none","#55758D"], // ジャンヌ・ダルク
   "042":["tan","ink","long","full","court","scroll","crown","#804D56"], // 始皇帝
-  "043":["peach","white","long","full","robe","palette","beret","#895655"], // レオナルド・ダ・ヴィンチ
-  "044":["peach","silver","wavy","short","robe","brush","none","#637B74"], // ミケランジェロ
-  "045":["peach","red","parted","short","work","flower","hat","#8C7447"], // ゴッホ
-  "046":["peach","ink","bald","none","work","palette","none","#7A5966"], // ピカソ
-  "047":["ivory","silver","wild","none","robe","music","none","#89525C"], // ベートーヴェン
-  "048":["ivory","white","wavy","none","robe","music","ribbon","#A3525D"], // モーツァルト
-  "049":["ivory","white","curls","none","robe","music","none","#5F6986"], // バッハ
-  "050":["tan","silver","bald","short","kimono","brush","hood","#476B90"], // 葛飾北斎
-  "051":["peach","ink","topknot","none","kimono","palette","none","#568081"], // 歌川広重
-  "052":["peach","ink","swept","none","suit","palette","none","#A75E4E"], // 岡本太郎
+  "043":["peach","white","shoulder","longFull","robe","palette","none","#895655"], // レオナルド・ダ・ヴィンチ
+  "044":["peach","silver","receding","pointed","robe","brush","none","#535452"], // ミケランジェロ
+  "045":["peach","red","closecrop","full","suit","flower","feltHat","#596D82"], // ゴッホ
+  "046":["peach","white","bald","none","sport","palette","none","#52637E"], // ピカソ
+  "047":["ivory","silver","shoulder","none","frock","music","none","#4F4C50"], // ベートーヴェン
+  "048":["ivory","white","queue","none","frock","music","none","#AA4F57"], // モーツァルト
+  "049":["ivory","white","wig","none","frock","music","none","#484A50"], // バッハ
+  "050":["tan","silver","receding","none","kimono","brush","none","#476B90"], // 葛飾北斎
+  "051":["peach","ink","shaved","none","monk","brush","none","#496594"], // 歌川広重
+  "052":["peach","ink","slick","none","suit","palette","none","#A75E4E"], // 岡本太郎
   "053":["ivory","ink","long","none","court","book","none","#885679"], // 紫式部
-  "054":["ivory","ink","long","none","court","quill","ribbon","#5E7F77"], // 清少納言
-  "055":["tan","ink","bald","none","kimono","quill","hat","#82774B"], // 松尾芭蕉
+  "054":["ivory","ink","long","none","court","book","none","#477A78"], // 清少納言
+  "055":["tan","ink","shaved","none","kimono","brush","none","#82774B"], // 松尾芭蕉
   "056":["peach","ink","parted","mustache","suit","pen","none","#50676F"], // 夏目漱石
-  "057":["peach","ink","bun","none","kimono","book","none","#A65D73"], // 樋口一葉
-  "058":["peach","ink","parted","none","suit","star","hat","#536C87"], // 宮沢賢治
-  "059":["ivory","brown","wavy","goatee","robe","quill","earring","#66568D"], // シェイクスピア
-  "060":["ivory","brown","swept","none","suit","quill","none","#596D80"], // アンデルセン
+  "057":["peach","ink","puffedBun","none","kimono","book","none","#A65D73"], // 樋口一葉
+  "058":["peach","ink","parted","none","frock","star","bowler","#536C87"], // 宮沢賢治
+  "059":["ivory","brown","receding","pointed","frock","quill","none","#4A4046"], // シェイクスピア
+  "060":["ivory","brown","shoulder","none","frock","quill","none","#596D80"], // アンデルセン
   "062":["ivory","ink","bob","none","dress","book","none","#B66359"], // アンネ・フランク
-  "063":["ivory","white","bald","none","robe","heart","hood","#526FA5"], // マザー・テレサ
-  "064":["ivory","brown","bun","none","dress","lamp","cap","#496C6B"], // ナイチンゲール
-  "065":["ivory","white","wild","mustache","lab","music","none","#667B67"], // シュヴァイツァー
+  "063":["ivory","white","shaved","none","highNeck","heart","hood","#526FA5"], // マザー・テレサ
+  "064":["ivory","brown","lowBun","none","highNeck","lamp","none","#50515B"], // ナイチンゲール
+  "065":["ivory","white","shoulder","walrus","bowtie","music","none","#494D4C"], // シュヴァイツァー
   "066":["peach","ink","swept","none","suit","pen","none","#576779"], // 杉原千畝
-  "067":["tan","silver","crop","mustache","work","leaf","hat","#9B8062"], // 中村哲
-  "068":["peach","ink","long","none","monk","scroll","hood","#7C668B"], // 北条政子
+  "067":["tan","silver","receding","pencil","work","leaf","none","#9B8062"], // 中村哲
+  "068":["peach","ink","shaved","none","monk","scroll","none","#65596E"], // 北条政子
   "070":["peach","ink","crop","none","sport","ball","cap","#376991"], // 大谷翔平
-  "071":["peach","ink","parted","none","sport","bat","cap","#B36845"], // 王貞治
-  "072":["tan","ink","crop","none","sport","none","none","#AB524C"], // 円谷幸吉
+  "071":["peach","ink","parted","none","sport","bat","ballCap","#4A4145"], // 王貞治
+  "072":["tan","ink","closecrop","none","sport","none","none","#B45A57"], // 円谷幸吉
   "101":["ivory","brown","wavy","none","dress","leaf","none","#547E65"], // レイチェル・カーソン
-  "N01":["peach","silver","parted","none","suit","atom","round","#63768C"], // 朝永振一郎
-  "N02":["peach","silver","swept","none","suit","crystal","glasses","#6E6591"], // 江崎玲於奈
-  "N03":["peach","silver","crop","none","lab","film","glasses","#657E88"], // 白川英樹
-  "N04":["peach","silver","swept","none","suit","flask","none","#626879"], // 野依良治
-  "N05":["peach","silver","bald","none","suit","star","glasses","#73658E"], // 小柴昌俊
-  "N06":["peach","ink","parted","none","work","flask","glasses","#6B8590"], // 田中耕一
-  "N07":["peach","ink","bald","none","lab","flask","none","#5B8982"], // 山中伸弥
-  "N08":["peach","white","swept","none","suit","atom","glasses","#527C76"], // 鈴木章
-  "N09":["peach","silver","parted","none","lab","atom","glasses","#967454"], // 根岸英一
-  "N10":["peach","white","crop","none","suit","light","glasses","#4772A8"], // 赤崎勇
+  "N01":["peach","silver","tousled","none","suit","atom","none","#63768C"], // 朝永振一郎
+  "N02":["peach","ink","slick","none","suit","crystal","none","#6E6591"], // 江崎玲於奈
+  "N03":["peach","silver","parted","none","suit","film","glasses","#657E88"], // 白川英樹
+  "N04":["peach","silver","receding","none","suit","flask","glasses","#626879"], // 野依良治
+  "N05":["peach","white","closecrop","none","suit","star","none","#73658E"], // 小柴昌俊
+  "N06":["peach","ink","slick","none","suit","flask","none","#6B8590"], // 田中耕一
+  "N07":["peach","ink","closecrop","none","suit","flask","glasses","#50666C"], // 山中伸弥
+  "N08":["peach","white","receding","none","suit","atom","glasses","#527C76"], // 鈴木章
+  "N09":["peach","ink","parted","none","suit","atom","glasses","#7D7560"], // 根岸英一
+  "N10":["peach","white","receding","none","suit","light","glasses","#4772A8"], // 赤崎勇
   "N11":["peach","ink","parted","none","lab","crystal","glasses","#4F6AA9"], // 天野浩
-  "N12":["peach","ink","swept","none","work","light","none","#356AAB"], // 中村修二
+  "N12":["peach","ink","closecrop","none","suit","light","none","#356AAB"], // 中村修二
   "N13":["peach","silver","bald","none","suit","flask","glasses","#60795B"], // 大村智
-  "N14":["peach","ink","swept","none","suit","atom","glasses","#516F8F"], // 梶田隆章
-  "N15":["peach","silver","swept","none","kimono","flask","none","#827261"], // 本庶佑
-  "N16":["peach","silver","parted","none","suit","gear","glasses","#88735F"], // 吉野彰
-  "N17":["peach","white","parted","none","suit","globe","glasses","#527985"], // 真鍋淑郎
-  "N18":["peach","silver","bald","none","lab","light","glasses","#518B78"], // 下村脩
-  "N19":["tan","white","crop","full","kimono","leaf","none","#647453"], // 田中正造
-  "N20":["peach","ink","bald","none","kimono","book","none","#607983"], // 杉田玄白
+  "N14":["peach","ink","parted","none","suit","atom","none","#516F8F"], // 梶田隆章
+  "N15":["peach","silver","slick","none","suit","flask","none","#435776"], // 本庶佑
+  "N16":["peach","silver","receding","none","suit","gear","glasses","#88735F"], // 吉野彰
+  "N17":["peach","white","shortUp","none","suit","globe","boldGlasses","#527985"], // 真鍋淑郎
+  "N18":["peach","silver","closecrop","none","suit","light","none","#518B78"], // 下村脩
+  "N19":["tan","white","chonmage","longFull","kimono","leaf","none","#647453"], // 田中正造
+  "N20":["peach","white","receding","none","kimono","book","none","#607983"], // 杉田玄白
   "N21":["peach","ink","topknot","none","kimono","ship","none","#557F7B"], // 本多利明
-  "N22":["peach","ink","topknot","short","samurai","book","none","#75664E"], // 横井小楠
-  "N23":["peach","ink","parted","full","suit","book","none","#495E7B"], // 森有礼
+  "N22":["peach","ink","chonmage","none","kamishimo","book","none","#75664E"], // 横井小楠
+  "N23":["peach","ink","slick","longFull","suit","book","none","#495E7B"], // 森有礼
   "N24":["tan","ink","topknot","none","samurai","scroll","none","#834E55"], // 大塩平八郎
   "N25":["peach","ink","bald","none","kimono","quill","none","#8E6941"], // 井原西鶴
   "N26":["peach","ink","topknot","none","kimono","scroll","none","#813C5D"], // 近松門左衛門
-  "N27":["peach","ink","bald","none","kimono","brush","none","#6F7F58"], // 与謝蕪村
-  "N28":["tan","ink","crop","none","kimono","quill","hat","#717758"], // 小林一茶
-  "N29":["peach","ink","bun","none","kimono","brush","ribbon","#794B76"], // 葛飾応為
-  "N30":["tan","ink","topknot","none","explorer","map","none","#507785"], // 間宮林蔵
-  "N31":["peach","ink","topknot","none","samurai","flag","none","#8B5A4E"], // 高杉晋作
-  "N32":["peach","ink","parted","short","suit","scroll","none","#5C6677"], // 木戸孝允
-  "N33":["tan","silver","swept","none","work","gear","none","#617A86"], // 本田宗一郎
-  "N34":["peach","silver","parted","none","suit","light","glasses","#775D64"], // 松下幸之助
+  "N27":["peach","ink","shaved","none","kimono","brush","none","#6F7F58"], // 与謝蕪村
+  "N28":["tan","ink","crop","none","kimono","quill","kasa","#717758"], // 小林一茶
+  "N29":["peach","ink","puffedBun","none","kimono","brush","none","#794B76"], // 葛飾応為
+  "N30":["tan","ink","chonmage","none","samurai","map","none","#4C555C"], // 間宮林蔵
+  "N31":["peach","ink","tousled","none","samurai","flag","none","#515669"], // 高杉晋作
+  "N32":["peach","ink","slick","none","bowtie","scroll","none","#4C4A55"], // 木戸孝允
+  "N33":["tan","silver","receding","none","suit","gear","goldGlasses","#4A555F"], // 本田宗一郎
+  "N34":["peach","silver","receding","none","suit","light","round","#5B555B"], // 松下幸之助
   "N35":["peach","ink","parted","none","suit","pen","beret,round","#594976"], // 手塚治虫
   "J25":["peach","ink","topknot","goatee","samurai","flower","eboshi","#5586A5"], // 明智光秀
   "J26":["peach","ink","topknot","none","court","fan","eboshi","#9F7645"], // 豊臣秀頼
   "J27":["tan","ink","topknot","mustache","armor","flag","helmet","#AB4D49"], // 真田幸村
-  "J28":["peach","ink","topknot","short","samurai","scroll","eboshi","#566F58"], // 毛利元就
-  "J29":["tan","ink","topknot","goatee","armor","fan","helmet","#766B47"], // 尼子経久
+  "J28":["peach","white","shaved","pointed","samurai","scroll","eboshi","#8A604C"], // 毛利元就
+  "J29":["tan","ink","chonmage","pointed","samurai","fan","none","#4A424C"], // 尼子経久
   "J30":["peach","ink","topknot","goatee","court","book","eboshi","#825889"], // 大内義隆
   "J31":["tan","ink","topknot","short","armor","flag","helmet","#465B78"], // 島津義久
   "J32":["peach","ink","topknot","mustache","armor","fan","helmet","#66506D"], // 島津忠恒
-  "J33":["peach","silver","bald","short","samurai","lamp","none","#87703D"], // 斎藤道三
-  "J34":["tan","ink","topknot","full","armor","flag","helmet","#6B514A"], // 斎藤義龍
-  "J35":["tan","ink","topknot","mustache","armor","flag","helmet","#AA6239"], // 前田利家
-  "J36":["peach","ink","long","goatee","kimono","fan","none","#A45570"], // 前田慶次
-  "J37":["ivory","ink","bald","none","samurai","scroll","hood","#667D9E"], // 上杉謙信
+  "J33":["peach","ink","topknot","short","kamishimo","lamp","eboshi","#45454F"], // 斎藤道三
+  "J34":["tan","ink","topknot","pointed","samurai","scroll","eboshi","#4B4750"], // 斎藤義龍
+  "J35":["tan","ink","shaved","mustache","court","fan","eboshi","#514755"], // 前田利家
+  "J36":["peach","ink","long","goatee","kimono","book","none","#A45570"], // 前田慶次
+  "J37":["ivory","ink","shaved","none","monk","scroll","none","#67566F"], // 上杉謙信
   "J38":["peach","ink","topknot","mustache","armor","map","helmet","#33495F"], // 伊達正宗
-  "J39":["ivory","silver","bald","short","monk","book","none","#656675"], // 北条早雲
-  "J40":["tan","ink","topknot","mustache","armor","map","helmet","#44606E"], // 北条氏康
+  "J39":["ivory","silver","shaved","none","monk","fan","none","#605E62"], // 北条早雲
+  "J40":["ivory","ink","topknot","pencil","samurai","map","eboshi","#7D645B"], // 北条氏康
   "J41":["peach","ink","topknot","goatee","samurai","fan","eboshi","#7C544A"], // 北条氏政
-  "J42":["tan","silver","long","full","armor","flag","helmet","#974139"], // 武田信玄
+  "J42":["tan","ink","shaved","pointed","monk","fan","none","#974139"], // 武田信玄
   "J43":["tan","ink","topknot","short","armor","scroll","helmet","#566F60"], // 上杉景勝
-  "J44":["ivory","ink","topknot","none","armor","map","helmet","#428284"], // 長宗我部元親
-  "J45":["tan","ink","topknot","full","armor","fan","helmet","#8F5431"], // 竜造寺隆信
-  "J46":["peach","ink","topknot","short","samurai","ship","none","#68779B"], // 大友宗麟
+  "J44":["ivory","ink","topknot","none","samurai","map","eboshi","#626B72"], // 長宗我部元親
+  "J45":["tan","ink","shaved","short","heavyRobe","fan","none","#8F5431"], // 竜造寺隆信
+  "J46":["peach","ink","shaved","none","monk","ship","none","#58444B"], // 大友宗麟
   "J47":["ivory","ink","bald","goatee","samurai","map","none","#51775F"], // 黒田官兵衛
-  "J48":["tan","ink","topknot","mustache","armor","scroll","helmet","#935347"], // 加藤清正
+  "J48":["tan","ink","topknot","mustache","armor","scroll","tallHelmet","#935347"], // 加藤清正
   "J49":["tan","ink","topknot","goatee","armor","flag","helmet","#7C4635"], // 福島正則
-  "J50":["ivory","ink","topknot","none","samurai","abacus","eboshi","#596A8D"], // 石田三成
+  "J50":["ivory","ink","slick","none","kamishimo","abacus","none","#596A8D"], // 石田三成
   "J51":["peach","ink","topknot","short","samurai","pen","none","#526F84"], // 片倉小十郎
-  "J52":["tan","brown","long","goatee","armor","flag","helmet","#786C44"], // 雑賀孫市
+  "J52":["tan","ink","chonmage","goatee","armor","flag","helmet","#786C44"], // 雑賀孫市
   "J53":["tan","silver","topknot","full","samurai","map","none","#7B5E83"], // 山本勘助
   "J54":["peach","ink","topknot","none","kimono","brush","none","#B46E65"], // 歌麿
   "W01":["ivory","brown","parted","full","suit","crystal","none","#587D78"], // ピエール・キュリー
-  "W02":["ivory","silver","bald","mustache","suit","light","round","#5B6385"], // マックス・プランク
-  "W03":["peach","silver","swept","none","suit","atom","none","#517D84"], // ニールス・ボーア
+  "W02":["ivory","silver","receding","pencil","suit","light","round","#5B6385"], // マックス・プランク
+  "W03":["peach","white","slick","none","suit","atom","none","#517D84"], // ニールス・ボーア
   "W04":["peach","brown","parted","mustache","suit","atom","none","#8A7556"], // アーネスト・ラザフォード
-  "W05":["peach","brown","swept","none","suit","pen","none","#487185"], // リチャード・ファインマン
-  "W06":["ivory","brown","parted","none","suit","star","glasses","#5D777E"], // スティーヴン・ホーキング
-  "W07":["ivory","silver","wavy","none","suit","book","none","#74648A"], // マイケル・ファラデー
-  "W08":["peach","brown","wavy","full","suit","gear","none","#986B58"], // ジェームス・クラーク・マクスウェル
-  "W13":["ivory","brown","wavy","none","suit","scale","none","#63799A"], // アントワーヌ・ラボアジエ
-  "W14":["ivory","silver","wild","full","suit","book","none","#73687E"], // ドミートリー・メンデレーエフ
-  "W21":["ivory","silver","wavy","none","suit","flask","none","#6F8059"], // エドワード・ジェンナー
-  "W24":["ivory","silver","parted","full","explorer","leaf","round","#688B74"], // アルフレッド・ラッセル・ウォレス
-  "W26":["peach","white","long","none","explorer","compass","none","#698757"], // ジェーン・グドール
-  "W31":["ivory","brown","parted","none","suit","telescope","none","#515F79"], // エドウィン・ハッブル
-  "W32":["peach","brown","wavy","none","suit","globe","none","#986D46"], // カール・セーガン
-  "W36":["ivory","white","wavy","none","robe","abacus","cap","#65587F"], // カール・フリードリヒ・ガウス
+  "W05":["peach","brown","tousled","none","suit","pen","none","#657B87"], // リチャード・ファインマン
+  "W06":["ivory","brown","swept","none","suit","star","glasses","#5D777E"], // スティーヴン・ホーキング
+  "W07":["ivory","silver","parted","none","bowtie","book","none","#514956"], // マイケル・ファラデー
+  "W08":["peach","brown","receding","longFull","bowtie","gear","none","#625760"], // ジェームス・クラーク・マクスウェル
+  "W13":["ivory","white","queue","none","frock","scale","none","#4E4B54"], // アントワーヌ・ラボアジエ
+  "W14":["ivory","white","shoulder","longFull","suit","book","none","#595460"], // ドミートリー・メンデレーエフ
+  "W21":["ivory","silver","parted","none","frock","flask","none","#4E514C"], // エドワード・ジェンナー
+  "W24":["ivory","white","parted","longFull","suit","leaf","round","#556A62"], // アルフレッド・ラッセル・ウォレス
+  "W26":["peach","white","lowPony","none","work","leaf","none","#698757"], // ジェーン・グドール
+  "W31":["ivory","brown","slick","none","suit","telescope","none","#515F79"], // エドウィン・ハッブル
+  "W32":["peach","ink","shoulder","none","highNeck","globe","none","#5D545E"], // カール・セーガン
+  "W36":["ivory","white","receding","none","frock","abacus","skullCap","#4F4457"], // カール・フリードリヒ・ガウス
   "W42":["ivory","ink","parted","mustache","suit","light","none","#3E6084"], // ニコラ・テスラ
   "J01":["tan","ink","topknot","short","ancient","scroll","none","#826A45"], // 蘇我稲目
   "J02":["peach","ink","topknot","none","ancient","scroll","eboshi","#577B72"], // 中大兄皇子
   "J03":["peach","ink","topknot","goatee","court","fan","eboshi","#795978"], // 藤原道長
-  "J04":["tan","ink","bald","none","monk","scroll","none","#A05B43"], // 空海
-  "J05":["ivory","ink","bald","none","monk","book","none","#677B61"], // 最澄
-  "J06":["peach","ink","topknot","full","court","flower","eboshi","#996168"], // 菅原道真
+  "J04":["tan","ink","shaved","none","monk","none","none","#945D40"], // 空海
+  "J05":["ivory","ink","shaved","none","monk","book","monkHood","#735A4F"], // 最澄
+  "J06":["peach","ink","topknot","pointed","court","flower","eboshi","#4D4851"], // 菅原道真
   "J07":["ivory","ink","long","none","court","quill","none","#9D5F78"], // 和泉式部
-  "J08":["tan","silver","long","full","robe","leaf","cap","#737D4B"], // 役小角
-  "J09":["tan","ink","bald","short","court","ship","none","#8D554E"], // 平清盛
+  "J08":["tan","silver","shaved","longFull","heavyRobe","leaf","ritualHood","#79634B"], // 役小角
+  "J09":["tan","ink","shaved","none","monk","ship","none","#8D554E"], // 平清盛
   "J10":["tan","ink","topknot","mustache","armor","flag","helmet","#676891"], // 源義朝
-  "J11":["ivory","ink","topknot","none","court","pen","eboshi","#775991"], // 崇徳上皇
+  "J11":["ivory","ink","parted","none","court","fan","eboshi","#8C806F"], // 崇徳上皇
   "J12":["peach","silver","bald","none","monk","fan","none","#95713C"], // 白河法皇
   "J13":["peach","silver","topknot","goatee","court","scroll","eboshi","#647555"], // 藤原良房
-  "J14":["ivory","silver","topknot","short","court","book","eboshi","#595782"], // 藤原定家
-  "J15":["ivory","ink","long","none","armor","fan","helmet","#487C77"], // 源義経
-  "J17":["tan","ink","bald","none","monk","book","none","#6E5981"], // 日蓮
-  "J18":["ivory","ink","bald","none","monk","book","none","#5E738E"], // 道元
-  "J19":["tan","ink","bald","none","monk","compass","hat","#718763"], // 一遍
+  "J14":["ivory","ink","parted","pencil","court","fan","eboshi","#524A57"], // 藤原定家
+  "J15":["ivory","ink","parted","pencil","armor","fan","helmet","#745A52"], // 源義経
+  "J17":["tan","ink","shaved","none","monk","book","none","#81634B"], // 日蓮
+  "J18":["ivory","ink","shaved","none","monk","book","none","#696B65"], // 道元
+  "J19":["tan","ink","shaved","none","monk","scroll","none","#718763"], // 一遍
   "J20":["peach","ink","topknot","none","samurai","ship","eboshi","#596B87"], // 北条時宗
-  "J21":["peach","ink","topknot","goatee","armor","flag","helmet","#675275"], // 足利尊氏
-  "J22":["ivory","ink","parted","short","court","fan","eboshi","#9A674C"], // 足利義満
+  "J21":["peach","ink","parted","pointed","court","fan","eboshi","#5E5868"], // 足利尊氏
+  "J22":["ivory","ink","shaved","none","monk","fan","none","#9A674C"], // 足利義満
   "J23":["ivory","ink","parted","none","court","fan","eboshi","#667B8D"], // 観阿弥・世阿弥
   "J24":["peach","white","bald","none","monk","quill","none","#79777A"], // 宗祇
-  "J55":["tan","ink","topknot","none","work","ship","none","#667F97"], // 大黒屋光太夫
+  "J55":["tan","ink","receding","none","frock","ship","none","#64785D"], // 大黒屋光太夫
   "J56":["ivory","ink","topknot","none","kimono","brush","none","#8371A0"], // 写楽
-  "J57":["ivory","ink","topknot","none","samurai","scale","none","#5E7588"], // 松平定信
-  "J58":["tan","ink","topknot","none","work","ship","cap","#52756D"], // 高田屋嘉兵衛
+  "J57":["ivory","ink","chonmage","none","court","scale","eboshi","#555764"], // 松平定信
+  "J58":["tan","ink","chonmage","none","kimono","ship","none","#586964"], // 高田屋嘉兵衛
   "J59":["peach","ink","topknot","none","kimono","leaf","none","#5D7A58"], // 田村藍水
-  "J60":["tan","ink","topknot","none","samurai","map","none","#67798C"], // 林子平
+  "J60":["tan","ink","chonmage","none","kimono","map","none","#505861"], // 林子平
   "J61":["peach","ink","topknot","none","kimono","palette","none","#A57359"], // 司馬江漢
   "J62":["ivory","ink","topknot","none","kimono","book","none","#8B6B77"], // 古賀精里
   "J63":["peach","ink","topknot","none","kimono","flask","none","#6E8B81"], // 宇田川榕菴
-  "J64":["tan","ink","topknot","none","explorer","compass","none","#727A5A"], // 最上徳内
-  "J65":["peach","silver","bald","short","kimono","leaf","none","#8B7D65"], // 貝原益軒
+  "J64":["tan","ink","chonmage","none","samurai","compass","round","#727A5A"], // 最上徳内
+  "J65":["peach","silver","receding","pointed","kimono","leaf","none","#8B7D65"], // 貝原益軒
   "J66":["ivory","ink","topknot","none","samurai","book","none","#766D9B"], // 山脇東洋
   "J67":["tan","ink","topknot","none","samurai","compass","none","#8B624F"], // 近藤重蔵
   "J68":["peach","ink","topknot","none","work","ship","none","#796C53"], // 中野重右衛門
   "J69":["peach","ink","topknot","none","samurai","quill","none","#526C75"], // 久坂玄瑞
-  "J70":["tan","ink","swept","full","suit","scroll","none","#61536B"], // 大久保利通
-  "J71":["peach","silver","parted","mustache","suit","book","none","#586B76"], // 伊藤博文
-  "J72":["tan","silver","crop","full","uniform","scroll","none","#7D7354"], // 山県有朋
-  "J73":["tan","ink","parted","mustache","uniform","ship","none","#495E78"], // 榎本武揚
-  "J74":["tan","ink","swept","sideburn","suit","scroll","none","#7E665A"], // 後藤象二郎
-  "J75":["ivory","ink","topknot","mustache","court","globe","none","#6E6781"], // 岩倉具視
-  "J76":["peach","silver","swept","mustache","suit","pen","none","#617C72"], // 前島密
-  "J77":["tan","ink","topknot","none","samurai","scroll","none","#736C60"], // 河井継之助
-  "W09":["ivory","silver","wavy","mustache","robe","gear","none","#806458"], // オットー・フォン・ゲーリケ
-  "W10":["ivory","brown","swept","sideburn","robe","light","none","#755E76"], // トーマス・ヤング
-  "W11":["peach","brown","wavy","none","robe","atom","round","#6C6D87"], // ジョン・ドルトン
-  "W12":["ivory","white","parted","full","suit","crystal","round","#6F6582"], // ウィリアム・クルックス
-  "W15":["peach","brown","swept","sideburn","robe","flask","none","#787160"], // ヨハン・ドーベライナー
+  "J70":["tan","ink","tousled","mutton","bowtie","scroll","none","#61536B"], // 大久保利通
+  "J71":["peach","white","receding","pointed","uniform","book","none","#586B76"], // 伊藤博文
+  "J72":["tan","white","receding","walrus","uniform","scroll","none","#7D7354"], // 山県有朋
+  "J73":["tan","ink","receding","pencil","uniform","ship","none","#495E78"], // 榎本武揚
+  "J74":["tan","white","receding","walrus","suit","scroll","none","#4D4D58"], // 後藤象二郎
+  "J75":["ivory","ink","slick","none","frock","globe","none","#6E6781"], // 岩倉具視
+  "J76":["peach","ink","slick","none","uniform","pen","none","#617C72"], // 前島密
+  "J77":["tan","ink","chonmage","none","samurai","scroll","none","#4C4D55"], // 河井継之助
+  "W09":["ivory","brown","wig","pointed","frock","gear","none","#5B4C57"], // オットー・フォン・ゲーリケ
+  "W10":["ivory","brown","closecrop","none","frock","light","none","#5F5268"], // トーマス・ヤング
+  "W11":["peach","silver","receding","none","frock","atom","none","#55505F"], // ジョン・ドルトン
+  "W12":["ivory","white","receding","longFull","suit","crystal","round","#6F6582"], // ウィリアム・クルックス
+  "W15":["peach","brown","curls","none","frock","flask","none","#535669"], // ヨハン・ドーベライナー
   "W16":["ivory","silver","bald","mustache","suit","flask","round","#5A677B"], // フリッツ・ハーバー
   "W17":["ivory","silver","swept","none","suit","atom","none","#587781"], // ライナス・ポーリング
-  "W18":["ivory","white","wavy","none","robe","light","none","#866C55"], // アレッサンドロ・ボルタ
-  "W19":["peach","brown","curls","none","robe","lamp","none","#7C6071"], // ハンフリー・デービー
+  "W18":["ivory","white","queue","none","frock","light","none","#4E5B6A"], // アレッサンドロ・ボルタ
+  "W19":["peach","brown","tousled","none","frock","lamp","none","#474750"], // ハンフリー・デービー
   "W20":["ivory","white","parted","none","robe","leaf","none","#777B5C"], // ジャン=バティスト・ラマルク
-  "W23":["ivory","silver","wavy","full","suit","book","none","#74636D"], // ヨーゼフ・ヒルトル
-  "W25":["peach","silver","parted","mustache","lab","book","glasses","#799392"], // フランシス・コリンズ
-  "W27":["ivory","silver","bob","none","lab","corn","none","#809573"], // バーバラ・マクリントック
-  "W28":["ivory","brown","wavy","none","lab","crystal","none","#77829D"], // ロザリンド・フランクリン
+  "W23":["ivory","white","wavy","none","frock","book","none","#74636D"], // ヨーゼフ・ヒルトル
+  "W25":["peach","silver","closecrop","mustache","suit","book","glasses","#4B5668"], // フランシス・コリンズ
+  "W27":["ivory","silver","slick","none","dress","corn","none","#809573"], // バーバラ・マクリントック
+  "W28":["ivory","brown","parted","none","highNeck","crystal","none","#51495D"], // ロザリンド・フランクリン
   "W29":["ivory","silver","crop","full","suit","flask","round","#566D78"], // ロベルト・コッホ
-  "W33":["peach","red","parted","mustache","robe","star","none","#6B5A79"], // ティコ・ブラーエ
-  "W34":["ivory","brown","wavy","goatee","robe","star","none","#715D82"], // ヨハネス・ケプラー
-  "W35":["peach","white","curls","none","robe","telescope","none","#526F85"], // ウィリアム・ハーシェル
-  "W37":["ivory","brown","parted","mustache","suit","pen","none","#646D59"], // ダヴィド・ヒルベルト
-  "W38":["peach","ink","swept","none","suit","gear","none","#5D6B84"], // ジョン・フォン・ノイマン
-  "W39":["ivory","white","swept","none","suit","book","none","#665B70"], // ベルトラン・ラッセル
-  "W40":["ivory","brown","parted","none","suit","gear","none","#6C765F"], // アラン・チューリング
-  "W41":["ivory","white","parted","none","robe","abacus","cap","#7E6655"], // レオンハルト・オイラー
-  "W43":["ivory","silver","swept","sideburn","robe","gear","none","#775D62"], // チャールズ・バベッジ
-  "W44":["ivory","brown","long","none","robe","pen","none","#806251"], // ゴットフリード・ライプニッツ
-  "W45":["peach","brown","parted","full","robe","book","beret","#826477"], // アンドレアス・ヴェサリウス
-  "W46":["ivory","silver","parted","full","suit","light","none","#635977"], // サミュエル・モース
-  "W47":["ivory","silver","bald","none","suit","atom","glasses","#66828F"], // スティーヴン・ワインバーグ
-  "W48":["peach","silver","parted","none","suit","globe","none","#646C85"], // ジェフリー・ウェスト
+  "W33":["peach","brown","receding","pointed","ruff","star","none","#554552"], // ティコ・ブラーエ
+  "W34":["ivory","brown","shoulder","pointed","frock","star","none","#715D82"], // ヨハネス・ケプラー
+  "W35":["peach","white","queue","none","frock","telescope","none","#526F85"], // ウィリアム・ハーシェル
+  "W37":["ivory","silver","receding","full","suit","pen","round","#646D59"], // ダヴィド・ヒルベルト
+  "W38":["peach","ink","receding","none","suit","gear","none","#5D6B84"], // ジョン・フォン・ノイマン
+  "W39":["ivory","white","tousled","none","suit","book","none","#665B70"], // ベルトラン・ラッセル
+  "W40":["ivory","ink","slick","none","suit","gear","none","#535653"], // アラン・チューリング
+  "W41":["ivory","white","queue","none","frock","abacus","none","#7E6655"], // レオンハルト・オイラー
+  "W43":["ivory","silver","receding","sideburn","frock","gear","none","#775D62"], // チャールズ・バベッジ
+  "W44":["ivory","brown","wig","none","frock","pen","none","#674E59"], // ゴットフリード・ライプニッツ
+  "W45":["peach","brown","closecrop","pointed","robe","book","none","#625262"], // アンドレアス・ヴェサリウス
+  "W46":["ivory","white","wavy","none","bowtie","light","none","#655B67"], // サミュエル・モース
+  "W47":["ivory","white","slick","none","suit","atom","none","#66828F"], // スティーヴン・ワインバーグ
+  "W48":["peach","silver","wavy","full","suit","globe","round","#646C85"], // ジェフリー・ウェスト
   "W49":["ivory","brown","parted","none","suit","atom","none","#5F627C"], // ポール・ディラック
-  "W50":["peach","brown","wavy","none","suit","gear","glasses","#676B86"], // セス・ロイド
+  "W50":["peach","silver","closecrop","none","work","gear","glasses","#8A5556"], // セス・ロイド
 };
 const PORTRAIT_PAIRS = {
-  "015":["ivory","brown","swept","none","suit","none","none","#756557"],
+  "015":["ivory","brown","receding","none","bowtie","none","none","#756557"],
   "J23":["peach","ink","bun","short","court","none","none","#9B6358"]
 };
+// 写真・肖像で確認できる輪郭、眉、表情などを人物ごとに調整する。
+const PORTRAIT_PROFILES = {
+  "001":{"face":"lean","brows":"lifted","mouth":"calm","nose":"long"},
+  "006":{"face":"lean","brows":"straight","mouth":"calm","eyes":"deep"},
+  "007":{"face":"broad","mature":true,"brows":"lifted","nose":"long"},
+  "026":{"face":"lean","brows":"straight","mouth":"calm"},
+  "029":{"face":"round","eyes":"narrow","mouth":"serious","mature":true},
+  "030":{"face":"broad","eyes":"narrow","mature":true},
+  "031":{"face":"round","mouth":"smile"},
+  "061":{"face":"round","brows":"lifted","mouth":"calm"},
+  "002":{"face":"broad","mouth":"serious","eyes":"deep","mature":true},
+  "003":{"face":"lean","mouth":"calm"},
+  "004":{"face":"round","mature":true,"nose":"long"},
+  "005":{"face":"lean","brows":"straight","mouth":"serious"},
+  "008":{"face":"lean","brows":"lifted","nose":"long","mouth":"serious"},
+  "009":{"face":"broad","mature":true,"brows":"thick","browColor":"white","eyes":"deep"},
+  "010":{"face":"broad","brows":"thick","mature":true,"mouth":"calm"},
+  "011":{"face":"lean","mature":true,"mouth":"calm"},
+  "069":{"face":"square","brows":"straight","eyes":"narrow","mouth":"serious"},
+  "012":{"face":"round","eyes":"deep","mature":true},
+  "013":{"face":"round","brows":"straight","mouth":"calm"},
+  "015":{"face":"square","brows":"straight","mouth":"calm","second":{"face":"lean","nose":"long","mouth":"calm"}},
+  "017":{"face":"broad","mature":true,"brows":"thick"},
+  "018":{"face":"lean","mature":true,"mouth":"calm"},
+  "021":{"face":"lean","mature":true,"nose":"long"},
+  "022":{"face":"lean","brows":"straight","mouth":"serious"},
+  "023":{"face":"lean","brows":"lifted","mouth":"serious","eyes":"narrow"},
+  "024":{"face":"lean","brows":"straight","mouth":"calm"},
+  "025":{"face":"broad","brows":"thick","mouth":"serious","mature":true},
+  "027":{"face":"broad","eyes":"narrow","brows":"thick","mouth":"calm"},
+  "028":{"face":"lean","nose":"long","mature":true},
+  "032":{"face":"lean","eyes":"deep","mouth":"serious","mature":true},
+  "033":{"face":"lean","brows":"thick","mouth":"serious"},
+  "034":{"face":"round","mature":true,"mouth":"calm"},
+  "035":{"face":"lean","nose":"long","eyes":"deep","mature":true,"mouth":"calm"},
+  "036":{"face":"square","nose":"long","eyes":"deep","mouth":"serious","mature":true},
+  "039":{"face":"broad","brows":"lifted","mouth":"grin","mature":true},
+  "040":{"face":"lean","nose":"long","brows":"straight","mouth":"calm"},
+  "043":{"face":"lean","mature":true,"mouth":"serious"},
+  "044":{"face":"square","brows":"thick","nose":"long","mature":true},
+  "045":{"face":"lean","nose":"long","brows":"straight","mouth":"serious"},
+  "046":{"face":"square","brows":"thick","mouth":"serious","mature":true},
+  "047":{"face":"square","brows":"thick","mouth":"serious","eyes":"deep"},
+  "048":{"face":"round","brows":"lifted","mouth":"calm","nose":"long"},
+  "049":{"face":"broad","brows":"straight","mouth":"calm","mature":true},
+  "050":{"face":"lean","brows":"lifted","mouth":"calm","mature":true},
+  "051":{"face":"lean","eyes":"narrow","mouth":"calm"},
+  "052":{"face":"square","brows":"thick","mouth":"serious"},
+  "054":{"face":"round","eyes":"narrow","mouth":"calm"},
+  "055":{"face":"lean","eyes":"narrow","mouth":"calm","mature":true},
+  "057":{"face":"lean","brows":"straight","mouth":"calm"},
+  "058":{"face":"lean","eyes":"narrow","mouth":"calm"},
+  "059":{"face":"lean","brows":"straight","mouth":"calm","nose":"long"},
+  "060":{"face":"lean","nose":"long","mouth":"calm"},
+  "063":{"face":"lean","eyes":"deep","mature":true,"nose":"long","mouth":"calm"},
+  "064":{"face":"lean","nose":"long","mouth":"calm","eyes":"narrow"},
+  "065":{"face":"lean","eyes":"deep","brows":"thick","mature":true},
+  "067":{"face":"lean","brows":"straight","mature":true,"mouth":"calm"},
+  "068":{"face":"round","eyes":"narrow","mouth":"calm"},
+  "071":{"face":"square","brows":"thick","eyes":"narrow","mouth":"calm"},
+  "072":{"face":"lean","brows":"straight","mouth":"serious"},
+  "N01":{"face":"lean","eyes":"narrow","mature":true},
+  "N02":{"face":"lean","eyes":"narrow","mouth":"calm"},
+  "N03":{"face":"round","eyes":"narrow","mouth":"serious","mature":true},
+  "N04":{"face":"round","eyes":"narrow","mature":true},
+  "N05":{"face":"broad","eyes":"deep","mature":true},
+  "N06":{"face":"lean","eyes":"deep","mouth":"calm"},
+  "N07":{"face":"square","brows":"straight","mouth":"calm","eyes":"narrow"},
+  "N08":{"face":"lean","eyes":"deep","mature":true,"mouth":"calm"},
+  "N09":{"face":"lean","eyes":"narrow","mature":true},
+  "N10":{"face":"round","eyes":"narrow","mature":true},
+  "N12":{"face":"square","brows":"straight","eyes":"narrow","mouth":"serious","mature":true},
+  "N14":{"face":"round","eyes":"narrow","mouth":"calm"},
+  "N15":{"face":"lean","eyes":"deep","mature":true},
+  "N16":{"face":"broad","eyes":"narrow","mouth":"grin","mature":true},
+  "N17":{"face":"lean","eyes":"deep","mouth":"grin","mature":true},
+  "N18":{"face":"square","eyes":"deep","mouth":"calm","mature":true},
+  "N19":{"face":"lean","eyes":"narrow","mature":true,"browColor":"white"},
+  "N20":{"face":"lean","eyes":"narrow","mouth":"calm","mature":true},
+  "N22":{"face":"lean","eyes":"narrow","mature":true},
+  "N23":{"face":"square","mouth":"calm"},
+  "N24":{"face":"square","brows":"straight","mouth":"serious"},
+  "N27":{"face":"broad","eyes":"narrow","mouth":"calm","mature":true},
+  "N29":{"face":"round","eyes":"narrow","mouth":"calm"},
+  "N31":{"face":"lean","mouth":"serious","brows":"straight"},
+  "N32":{"face":"square","mouth":"calm"},
+  "N33":{"face":"broad","mature":true,"brows":"thick"},
+  "N34":{"face":"broad","mature":true},
+  "J28":{"face":"lean","mature":true,"eyes":"narrow"},
+  "J29":{"face":"broad","eyes":"deep","mouth":"calm"},
+  "J33":{"face":"lean","eyes":"narrow"},
+  "J34":{"face":"broad","brows":"thick"},
+  "J35":{"face":"lean","eyes":"narrow"},
+  "J37":{"face":"lean","eyes":"narrow","mouth":"calm"},
+  "J38":{"face":"square","brows":"straight","mouth":"calm"},
+  "J39":{"face":"lean","nose":"long","mature":true},
+  "J40":{"face":"lean","eyes":"narrow"},
+  "J42":{"face":"broad","brows":"thick","mouth":"serious"},
+  "J44":{"face":"lean","brows":"straight"},
+  "J45":{"face":"broad","eyes":"deep","mouth":"serious"},
+  "J46":{"face":"round","eyes":"narrow","mature":true},
+  "J48":{"face":"lean","mouth":"serious"},
+  "J50":{"face":"lean","mouth":"serious"},
+  "W02":{"face":"lean","nose":"long","mature":true},
+  "W03":{"face":"square","brows":"thick","mature":true},
+  "W05":{"face":"lean","mouth":"grin","eyes":"narrow"},
+  "W06":{"face":"lean","brows":"straight","mouth":"calm","eyes":"narrow","headSupport":true},
+  "W07":{"face":"lean","brows":"thick","mature":true},
+  "W08":{"face":"square","mature":true},
+  "W13":{"face":"lean","brows":"lifted","mouth":"calm"},
+  "W14":{"face":"broad","mature":true,"brows":"thick"},
+  "W21":{"face":"round","eyes":"narrow","mouth":"calm"},
+  "W24":{"face":"lean","mature":true,"mouth":"calm"},
+  "W26":{"face":"lean","mature":true,"brows":"lifted","mouth":"calm"},
+  "W31":{"face":"lean","brows":"straight","nose":"long","mouth":"calm"},
+  "W32":{"face":"lean","mouth":"grin"},
+  "W36":{"face":"round","mature":true},
+  "J04":{"face":"round","eyes":"narrow","mouth":"serious"},
+  "J05":{"face":"lean","mouth":"calm"},
+  "J06":{"face":"lean","eyes":"narrow"},
+  "J08":{"face":"lean","mature":true},
+  "J09":{"face":"broad","mouth":"serious","brows":"thick"},
+  "J11":{"face":"lean","mouth":"calm","eyes":"narrow"},
+  "J14":{"face":"lean","eyes":"narrow","mouth":"calm"},
+  "J15":{"face":"lean","brows":"straight"},
+  "J17":{"face":"square","brows":"thick","mouth":"serious"},
+  "J18":{"face":"lean","eyes":"narrow","mouth":"calm"},
+  "J19":{"face":"round","eyes":"narrow","mouth":"calm"},
+  "J21":{"face":"lean","eyes":"deep","mouth":"serious"},
+  "J22":{"face":"broad","mouth":"calm","mature":true},
+  "J55":{"face":"square","eyes":"narrow","mouth":"calm"},
+  "J57":{"face":"lean","eyes":"narrow","mouth":"calm"},
+  "J60":{"face":"square","mouth":"serious"},
+  "J64":{"face":"square","mature":true,"mouth":"calm"},
+  "J65":{"face":"lean","mature":true,"mouth":"calm"},
+  "J70":{"face":"lean","mouth":"serious","brows":"thick"},
+  "J71":{"face":"lean","mature":true,"mouth":"calm"},
+  "J72":{"face":"square","mature":true,"brows":"thick"},
+  "J73":{"face":"lean","mouth":"calm","mature":true},
+  "J74":{"face":"broad","mature":true},
+  "J75":{"face":"lean","eyes":"narrow","mature":true},
+  "J76":{"face":"lean","mouth":"serious"},
+  "J77":{"face":"square","brows":"straight","mouth":"calm"},
+  "W09":{"face":"square","brows":"thick","mouth":"serious"},
+  "W10":{"face":"lean","nose":"long","mouth":"calm"},
+  "W11":{"face":"lean","nose":"long","eyes":"deep"},
+  "W12":{"face":"broad","mature":true,"eyes":"deep"},
+  "W15":{"face":"round","brows":"thick","mouth":"calm"},
+  "W18":{"face":"round","mouth":"calm","mature":true},
+  "W19":{"face":"lean","brows":"lifted","mouth":"calm"},
+  "W23":{"face":"lean","mature":true,"mouth":"serious"},
+  "W25":{"face":"broad","mouth":"grin","brows":"lifted"},
+  "W27":{"face":"lean","mature":true,"eyes":"narrow"},
+  "W28":{"face":"lean","brows":"straight","nose":"long","mouth":"calm"},
+  "W33":{"face":"lean","nose":"long","mouth":"calm"},
+  "W34":{"face":"lean","nose":"long","brows":"straight","mouth":"serious"},
+  "W35":{"face":"round","mature":true,"mouth":"calm"},
+  "W37":{"face":"lean","mature":true,"eyes":"deep"},
+  "W38":{"face":"broad","mouth":"grin","brows":"lifted"},
+  "W39":{"face":"lean","nose":"long","mature":true,"mouth":"grin"},
+  "W40":{"face":"square","brows":"straight","mouth":"calm"},
+  "W41":{"face":"round","eyes":"narrow","mouth":"calm"},
+  "W43":{"face":"square","eyes":"deep","mature":true},
+  "W44":{"face":"broad","brows":"lifted","mouth":"calm"},
+  "W45":{"face":"square","mouth":"serious"},
+  "W46":{"face":"lean","mature":true,"eyes":"deep"},
+  "W47":{"face":"round","mature":true,"mouth":"calm"},
+  "W48":{"face":"round","mature":true,"mouth":"grin"},
+  "W50":{"face":"broad","mouth":"grin"},
+};
 const PORTRAIT_DETAILS = {
-  "063":'<path d="M47 83L42 98L33 111M70 83L78 103L83 113" fill="none" stroke="#F9EFE0" stroke-width="5"/>',
-  "J27":'<path d="M42 32Q31 28 28 17M37 27L34 17M33 23L24 22M72 32Q83 28 86 17M77 27L80 17M81 23L90 22" fill="none" stroke="#DAB975" stroke-width="3"/><g fill="#E6C67B" stroke-width=".9"><circle cx="51" cy="30" r="2.7"/><circle cx="57" cy="30" r="2.7"/><circle cx="63" cy="30" r="2.7"/><circle cx="51" cy="36" r="2.7"/><circle cx="57" cy="36" r="2.7"/><circle cx="63" cy="36" r="2.7"/></g>',
-  "J38":'<path d="M38 20Q57 29 81 11Q76 29 59 32Q46 33 38 20Z" fill="#E7C978"/><path d="M39 57Q46 52 53 57Q47 64 40 59Z" fill="#42353D"/>'
+  "063":"<path d=\"M18 118Q22 97 37 89L47 83Q53 87 58 87Q65 86 70 83L80 88Q98 100 101 118Z\" fill=\"#F9EFE0\"/><path d=\"M42 86Q46 103 46 118M47 85Q51 102 51 118M71 85Q80 100 89 118M76 87Q83 100 94 118\" fill=\"none\" stroke=\"#526FA5\" stroke-width=\"2\"/><path d=\"M27 41Q42 26 68 26Q81 28 85 38M26 45Q43 31 68 31Q79 32 84 41\" fill=\"none\" stroke=\"#526FA5\" stroke-width=\"1.7\"/>",
+  "J27":"<path d=\"M42 32Q31 28 28 17M37 27L34 17M33 23L24 22M72 32Q83 28 86 17M77 27L80 17M81 23L90 22\" fill=\"none\" stroke=\"#DAB975\" stroke-width=\"3\"/><g fill=\"#E6C67B\" stroke-width=\".9\"><circle cx=\"51\" cy=\"30\" r=\"2.7\"/><circle cx=\"57\" cy=\"30\" r=\"2.7\"/><circle cx=\"63\" cy=\"30\" r=\"2.7\"/><circle cx=\"51\" cy=\"36\" r=\"2.7\"/><circle cx=\"57\" cy=\"36\" r=\"2.7\"/><circle cx=\"63\" cy=\"36\" r=\"2.7\"/></g>",
+  "J38":"<path d=\"M38 20Q57 29 81 11Q76 29 59 32Q46 33 38 20Z\" fill=\"#E7C978\"/>",
+  "046":"<path d=\"M16 118Q18 96 37 86L47 81Q57 88 67 81L79 86Q97 95 101 118Z\" fill=\"#F6EFE1\"/><path d=\"M31 91H85M23 98H92M20 105H97M18 112H99\" fill=\"none\" stroke=\"#425270\" stroke-width=\"3.3\"/><path d=\"M47 81Q57 89 67 81\" fill=\"none\" stroke=\"#F6EFE1\" stroke-width=\"1.2\"/>",
+  "047":"<path d=\"M45 82Q57 85 69 82L68 90L73 100L60 101L56 93L52 100L47 97L50 89Z\" fill=\"#A74F50\"/><path d=\"M51 85Q58 88 66 85M53 91L57 89\" fill=\"none\" stroke=\"#CF7971\" stroke-width=\"1.1\"/>",
+  "049":"<g fill=\"#F4ECE0\" stroke-width=\"1.5\"><path d=\"M30 60Q24 68 31 72Q37 73 38 67Q37 63 30 60ZM84 60Q90 68 83 72Q77 73 76 67Q77 63 84 60ZM28 72Q22 81 31 85Q38 83 38 78Q35 73 28 72ZM86 72Q92 81 83 85Q76 83 76 78Q79 73 86 72Z\"/></g><path d=\"M48 82L57 89L66 82L67 93L62 99L51 99L47 92Z\" fill=\"#FFFAEB\"/>",
+  "055":"<path d=\"M20 40Q38 31 49 21Q59 17 66 23Q77 33 96 40Q56 48 20 40Z\" fill=\"#D2AE73\"/><path d=\"M30 39L54 24M41 40L57 23M57 41L61 24M70 41L65 25M84 40L68 29\" fill=\"none\" stroke=\"#9C744E\" stroke-width=\".8\"/>",
+  "059":"<path d=\"M35 39Q24 48 28 61Q22 68 26 79Q24 89 33 94Q42 93 42 84L35 69L35 55L41 41ZM79 39Q90 48 86 61Q92 68 88 79Q90 89 81 94Q72 93 72 84L79 69L79 55L73 41Z\" fill=\"#6D493C\"/><path d=\"M48 82L57 88L66 82L77 88L64 95L57 90L50 95L37 88Z\" fill=\"#F6EBDC\"/><path d=\"M81 64Q75 67 80 71Q85 70 84 66\" fill=\"none\" stroke=\"#C09350\" stroke-width=\"1.8\"/>",
+  "064":"<path d=\"M28 49Q26 40 28 31Q30 19 40 15Q50 8 65 12Q77 12 84 23Q89 32 86 49L82 47Q81 37 76 34Q63 22 52 25Q39 28 34 41L34 54L28 55Z\" fill=\"#FBF3E5\"/><path d=\"M30 37Q31 26 42 20Q58 12 73 20Q83 25 85 38\" fill=\"none\" stroke=\"#BDA69F\" stroke-width=\"1.8\" stroke-dasharray=\"1 4\"/><path d=\"M29 51L34 60L38 57L35 49M84 50L80 59L76 56L80 47\" fill=\"#FBF3E5\" stroke-width=\"1.2\"/>",
+  "067":"<path d=\"M29 36Q28 24 37 18Q55 14 73 18Q85 22 86 36Q58 30 29 36Z\" fill=\"#CBB89A\"/><path d=\"M26 32Q57 25 88 32L87 40Q56 34 27 41Z\" fill=\"#E9D6B7\"/><path d=\"M29 35Q57 30 85 35\" fill=\"none\" stroke=\"#9C8163\" stroke-width=\"1.1\"/><path d=\"M47 84L57 91L67 84L65 111H50Z\" fill=\"#E9D6B7\"/>",
+  "071":"<path d=\"M19 117Q20 97 37 89L46 83L57 94L69 83L80 88Q98 97 100 117Z\" fill=\"#FAF2E1\"/><path d=\"M46 83L57 94L69 83M57 95V117\" fill=\"none\" stroke=\"#B6634C\" stroke-width=\"2.5\"/><path d=\"M35 40Q63 28 95 38Q94 45 73 45Q54 41 35 43Z\" fill=\"#4A4145\"/>",
+  "072":"<path d=\"M16 118Q17 94 37 86L48 81Q57 89 67 81L78 86Q98 94 101 118Z\" fill=\"#DAA67A\"/><path d=\"M26 118Q38 101 37 86L48 82Q47 93 57 93Q68 93 67 82L78 86Q77 102 90 118Z\" fill=\"#FAF3E7\"/><circle cx=\"57\" cy=\"104\" r=\"4.5\" fill=\"#B65A53\" stroke=\"none\"/>",
+  "N07":"<path d=\"M57 91L53 96L55 114H60L61 96Z\" fill=\"#4B888C\"/>",
+  "N10":"<path d=\"M57 91L53 96L55 114H60L61 96Z\" fill=\"#4C7095\"/>",
+  "N12":"<path d=\"M57 91L53 96L55 114H60L61 96Z\" fill=\"#D8AF5F\"/>",
+  "N15":"<path d=\"M57 91L53 96L55 114H60L61 96Z\" fill=\"#4799BE\"/>",
+  "N17":"<path d=\"M57 91L53 96L55 114H60L61 96Z\" fill=\"#AD504D\"/>",
+  "027":"<g fill=\"#F1ECE0\" stroke-width=\"1.1\"><circle cx=\"32\" cy=\"93\" r=\"3\"/><circle cx=\"82\" cy=\"93\" r=\"3\"/></g>",
+  "N24":"<g fill=\"#E7D3AF\" stroke-width=\"1\"><circle cx=\"32\" cy=\"99\" r=\"6\" fill=\"none\"/><path d=\"M32 100Q26 94 31 96L32 98L34 96Q38 94 32 100L34 102H30Z\"/></g>",
+  "J39":"<path d=\"M68 84L39 109M72 87L44 113M77 89L48 116\" fill=\"none\" stroke=\"#E3C77F\" stroke-width=\"1.7\"/>",
+  "J40":"<g fill=\"#C5756D\" stroke=\"none\"><circle cx=\"33\" cy=\"96\" r=\"2.2\"/><circle cx=\"79\" cy=\"103\" r=\"2.2\"/></g><g fill=\"#8AA286\" stroke=\"none\"><circle cx=\"38\" cy=\"102\" r=\"2.2\"/><circle cx=\"85\" cy=\"97\" r=\"2.2\"/></g>",
+  "J73":"<path d=\"M75 85L40 115L51 118L85 90Z\" fill=\"#87759D\"/><circle cx=\"71\" cy=\"97\" r=\"4\" fill=\"#E3BB69\"/>",
+  "W50":"<path d=\"M36 89L45 97L56 89L48 82M66 81L58 89L69 97L79 88\" fill=\"#A4696B\"/><path d=\"M28 101H88M25 109H92M39 94V116M51 96V116M65 96V116M77 94V116\" fill=\"none\" stroke=\"#BF8C88\" stroke-width=\"1.1\" opacity=\".8\"/>",
 };
 
 /* 人物の見出し用イラスト。各人物の髪型・服・小物を組み合わせて描く。 */
@@ -1754,15 +1944,29 @@ const PORTRAIT_HAIR_COLOR = {
 };
 const PORTRAIT_HAIR = {
   crop:'<path d="M32 52Q26 30 42 25Q57 17 73 25Q86 34 82 52L77 45Q72 38 68 35Q62 43 36 45Z"/>',
+  closecrop:'<path d="M32 54Q27 35 41 28Q58 21 73 28Q85 33 82 54L78 53L76 44Q66 36 55 37Q43 38 37 46L36 53Z"/>',
+  receding:'<path d="M32 57Q25 38 38 30Q46 26 51 30L46 36Q41 40 40 47L37 55ZM82 57Q87 43 78 32Q72 27 66 31L72 36Q77 42 77 50L79 56Z"/>',
   parted:'<path d="M32 53Q24 35 39 26Q50 18 64 24Q75 21 83 36Q87 44 82 54L75 46Q68 34 63 33Q54 45 37 45Z"/><path d="M63 29Q57 36 46 38" fill="none" opacity=".62"/>',
   swept:'<path d="M33 53Q24 39 35 30Q38 23 63 21Q79 20 83 26L78 33Q86 38 82 55L76 45Q70 40 68 34Q56 44 38 44Z"/>',
   curls:'<path d="M32 54Q24 49 29 41Q22 32 35 28Q34 19 46 22Q54 14 63 21Q75 17 78 26Q90 26 86 37Q93 44 82 54L77 48Q71 49 67 42Q58 48 51 43Q46 49 38 46Z"/>',
   long:'<path d="M32 54Q24 37 41 26Q59 14 76 27Q89 37 82 53L75 44Q65 39 58 33Q49 42 39 44Z"/>',
   bob:'<path d="M36 63Q22 47 35 30Q54 15 72 25Q90 32 87 59L81 73L75 58L75 44Q63 41 56 33Q49 43 37 47Z"/>',
   bun:'<circle cx="58" cy="22" r="12"/><path d="M32 54Q25 36 41 28Q58 18 75 29Q89 39 82 54L76 46Q67 41 58 34Q49 43 37 46Z"/>',
+  lowBun:'<path d="M32 56Q24 33 40 25Q58 16 73 25Q88 30 83 55L78 53Q77 39 65 33L57 29Q48 35 40 43L36 55Z"/><path d="M57 26Q49 31 45 37M63 27Q70 31 73 39" fill="none" stroke="#9D8176" opacity=".7"/>',
+  puffedBun:'<path d="M31 58Q23 42 30 30Q37 19 57 19Q73 18 82 28Q92 43 81 57L76 49Q76 37 64 31Q48 36 39 47L37 55Z"/><path d="M33 35Q45 26 59 25M74 30Q79 33 81 43" stroke="#9D8176" opacity=".65" fill="none"/>',
+  shortUp:'<path d="M32 55Q29 44 32 33L38 34L36 25L45 29L47 21L54 27L59 20L64 28L70 24L75 31L80 29Q87 37 82 54L78 51Q76 41 71 38Q50 32 37 48L36 55Z"/>',
   topknot:'<path d="M49 28Q43 16 52 13Q65 10 67 18L63 30Z"/><path d="M32 54Q25 39 38 30Q52 20 73 30Q86 38 81 54L76 47Q67 40 57 34Q47 44 37 47Z"/>',
+  chonmage:'<path d="M34 56Q27 48 31 35Q36 27 41 28Q39 37 43 40L39 55ZM80 56Q87 48 83 35Q78 27 73 28Q75 37 71 40L75 55Z"/><path d="M49 31Q48 17 58 17L66 21L63 27L55 26L55 33Z"/>',
   bald:'<path d="M30 56Q28 43 32 39L36 46L36 58ZM80 45L84 39Q89 46 85 57L80 58Z"/>',
+  shaved:'',
   wild:'<path d="M33 57L23 43L29 42L22 32L32 33L31 22L44 27L47 17L55 25L65 15L69 23L79 18L78 29L90 27L85 37L92 39L83 54L76 47L73 35Q63 39 57 35Q54 44 39 45Z"/>',
+  halo:'<path d="M31 60Q22 61 23 53Q15 50 20 45Q14 41 21 35Q17 29 25 27Q21 18 33 20Q32 13 41 15Q46 8 55 14Q62 8 67 15Q78 10 80 18Q90 14 91 23Q102 24 96 32Q104 36 97 43Q105 49 96 53Q94 61 83 60L79 55Q84 45 75 39Q72 33 66 34Q59 36 55 31Q51 37 44 38Q34 42 36 55Z"/><path d="M31 22Q29 29 36 32M74 20Q83 20 83 30M27 44Q31 45 29 50" stroke="#9D9094" fill="none" stroke-width="1.2"/>',
+  tousled:'<path d="M31 57Q23 52 29 46Q23 39 31 34Q28 28 41 25Q41 19 50 24Q56 17 65 22Q71 18 78 26Q87 26 84 34Q93 40 84 47L83 57L77 53Q77 40 66 39L62 33Q50 44 39 45L36 54Z"/>',
+  shoulder:'<path d="M31 57Q21 42 34 29Q38 21 53 23Q67 16 78 26Q92 32 84 47L80 63L75 53Q79 43 72 39L61 33Q46 44 38 45L36 56Z"/>',
+  queue:'<path d="M33 48Q24 39 36 29Q40 21 59 21Q75 21 79 31Q89 33 82 48L76 45Q70 37 67 31Q58 38 39 44Z"/><path d="M34 44Q23 42 25 52Q22 58 32 60Q40 57 36 51ZM80 44Q91 42 89 52Q92 58 82 60Q74 57 78 51Z"/>',
+  lowPony:'<path d="M32 54Q26 40 37 31Q47 21 61 23Q77 23 83 38L81 53L76 48Q74 39 67 34L58 30Q47 40 38 43L36 52Z"/><path d="M57 28Q49 32 45 39M66 29Q76 34 77 42" fill="none" stroke="#AEA39E" stroke-width="1.4"/>',
+  wig:'<path d="M32 51Q20 46 30 36Q27 30 37 27Q39 19 51 22Q61 15 74 23Q83 24 85 34Q93 40 85 48L79 57L73 44Q70 39 66 33Q55 44 38 45Z"/>',
+  slick:'<path d="M32 53Q25 41 31 29Q39 18 54 22Q63 17 77 23Q88 28 82 52L77 49L75 38Q68 33 56 30Q51 40 38 45L36 53Z"/><path d="M57 26L55 34M45 25Q40 31 36 40M64 24Q75 26 79 34" fill="none" stroke="#9A817A" opacity=".68"/>',
   wavy:'<path d="M33 54Q25 48 30 40Q24 32 37 28Q40 20 54 23Q70 16 78 26Q88 27 84 39Q89 49 81 54L75 48L74 42Q65 45 58 36Q51 44 38 45Z"/>',
   braids:'<path d="M33 56Q24 38 38 27Q53 18 67 24Q85 28 85 54L78 47Q63 43 57 34Q48 44 38 47Z"/>'
 };
@@ -1770,24 +1974,47 @@ const PORTRAIT_BACK_HAIR = {
   long:'<path d="M30 43Q21 67 15 101Q25 111 44 98H68Q89 109 100 101Q91 80 85 45Z"/>',
   bob:'<path d="M28 43Q21 70 33 82L44 73H70L84 82Q96 65 85 41Z"/>',
   braids:'<path d="M33 53Q17 55 23 72Q16 80 22 89Q16 96 24 103Q33 99 33 91Q39 84 34 77Q41 67 39 59ZM80 53Q96 55 90 72Q97 80 91 89Q97 96 89 103Q80 99 80 91Q74 84 79 77Q72 67 74 59Z"/>',
-  curls:'<path d="M32 49Q23 53 29 62Q22 69 30 76Q28 83 40 83H76Q88 83 84 75Q94 66 85 60Q91 48 82 46Z"/>'
+  curls:'<path d="M32 49Q23 53 29 62Q22 69 30 76Q28 83 40 83H76Q88 83 84 75Q94 66 85 60Q91 48 82 46Z"/>',
+  shoulder:'<path d="M31 47Q20 60 24 70Q15 78 24 89Q32 91 39 86L44 72H72L80 87Q92 92 95 80Q88 70 90 62L83 47Z"/>',
+  queue:'<path d="M77 63Q93 72 85 88L79 94L73 88L79 83L75 71Z"/><path d="M76 76L88 79" stroke="#4F414A"/>',
+  lowBun:'<circle cx="79" cy="70" r="11"/>',
+  lowPony:'<path d="M77 64Q87 60 91 70Q100 83 95 99Q91 107 85 111Q89 97 83 89Q72 80 76 70Z"/><path d="M79 72L90 70" stroke="#756473"/>',
+  wig:'<path d="M32 42Q19 49 26 60Q18 68 26 75Q19 83 31 92Q37 96 44 89L48 66H69L74 89Q85 99 94 89Q100 81 92 74Q99 65 90 60Q97 49 83 42Z"/>'
 };
 const PORTRAIT_BEARD = {
   mustache:'<path d="M57 66Q51 61 45 69Q52 72 57 69Q62 72 69 69Q63 61 57 66Z"/>',
+  walrus:'<path d="M57 64Q48 60 43 69L41 74Q49 72 57 71Q65 72 73 74L71 69Q66 60 57 64Z"/>',
+  pencil:'<path d="M56 65Q51 62 45 67Q52 67 56 68Q62 68 69 67Q64 62 58 65Z" stroke-width="1.35"/>',
+  tuft:'<path d="M56 65Q51 62 45 67Q52 67 57 68Q62 68 69 67Q64 62 58 65Z" stroke-width="1.3"/><path d="M53 76Q57 77 61 76Q61 82 57 84Q53 82 53 76Z" stroke-width="1.4"/>',
   goatee:'<path d="M57 66Q51 62 45 69Q53 72 57 69Q61 72 69 69Q63 62 57 66Z"/><path d="M49 76Q57 80 65 76Q65 87 57 90Q49 87 49 76Z"/>',
+  pointed:'<path d="M57 65Q50 62 45 69Q52 71 57 69Q62 71 69 69Q64 62 57 65Z"/><path d="M47 73Q57 80 67 73Q65 89 57 96Q49 89 47 73Z"/>',
   full:'<path d="M34 60Q36 70 44 72Q48 79 57 78Q67 79 72 71Q79 67 80 60Q85 76 76 83Q67 93 57 91Q47 94 37 83Q29 75 34 60Z"/><path d="M57 66Q51 62 45 69Q53 72 57 69Q61 72 69 69Q63 62 57 66Z"/>',
   short:'<path d="M34 63Q38 70 46 75Q57 83 68 75Q77 71 80 63Q81 77 70 85Q57 93 44 85Q33 78 34 63Z"/>',
-  sideburn:'<path d="M32 52L38 53L39 73Q33 70 32 63ZM82 52L76 53L75 73Q81 70 82 63Z"/>'
+  sideburn:'<path d="M32 52L38 53L39 73Q33 70 32 63ZM82 52L76 53L75 73Q81 70 82 63Z"/>',
+  mutton:'<path d="M33 54L38 53Q39 62 45 71Q48 75 44 81Q35 81 32 73Q28 64 33 54ZM81 54L76 53Q75 62 69 71Q66 75 70 81Q79 81 82 73Q86 64 81 54Z"/><path d="M57 65Q48 61 44 70Q51 73 57 69Q63 73 70 70Q66 61 57 65Z"/>',
+  chin:'<path d="M33 59Q38 68 45 75Q50 79 57 79Q64 79 70 75Q77 68 81 59Q83 76 73 85Q64 92 57 92Q49 92 41 85Q31 75 33 59Z"/>',
+  longFull:'<path d="M33 59Q38 68 48 72L57 75L66 72Q77 67 81 59Q87 75 77 85Q78 93 69 97Q65 103 57 104Q50 101 46 97Q37 95 37 86Q28 78 33 59Z"/><path d="M57 64Q48 61 42 70Q51 73 57 70Q64 73 72 70Q66 61 57 64Z"/>'
 };
 const PORTRAIT_HATS = {
   eboshi:'<path d="M35 35Q32 21 42 11Q55 7 69 14Q78 18 79 34Q56 26 35 35Z" fill="#352E37"/><path d="M46 16Q57 12 67 19" fill="none" stroke="#766373"/>',
   helmet:'<path d="M24 54L31 34Q37 20 57 19Q78 19 84 34L91 54L78 51L75 40H39L36 51Z" fill="#3E3842"/><path d="M29 40Q57 30 85 40M30 46L22 58M84 46L92 58" fill="none" stroke="#CCAD62"/><path d="M57 35L50 27L57 24L64 27Z" fill="#E7C978"/>',
+  tallHelmet:'<path d="M24 53L32 34Q38 25 43 10Q49 2 57 4Q69 12 71 29Q81 30 86 40L91 53L77 51L74 42H40L36 51Z" fill="#C7C2C1"/><path d="M31 40Q58 34 84 40M33 45L27 54M81 45L88 54" fill="none" stroke="#62596A"/><circle cx="57" cy="29" r="8" fill="#EDD18B"/><circle cx="57" cy="29" r="3.5" fill="#514853"/>',
   beret:'<path d="M29 38Q22 29 34 20Q46 12 66 17Q84 21 89 33Q78 33 73 37Q50 30 29 38Z" fill="currentColor"/><path d="M54 18L56 13" fill="none"/>',
   cap:'<path d="M28 41Q29 20 52 19Q78 17 84 38Q65 32 42 41Z" fill="currentColor"/><path d="M35 40Q63 28 95 38Q94 45 73 45Q54 41 35 43Z" fill="#F3D79E"/>',
+  ballCap:'<path d="M28 41Q29 22 51 21Q74 19 83 37Q65 33 42 41Z" fill="#343742"/><path d="M33 41Q62 30 92 38Q91 44 71 44Q55 40 33 44Z" fill="#48444C"/><path d="M53 22Q55 28 55 34" stroke="#777279" fill="none"/>',
   turban:'<path d="M29 44Q18 34 25 22Q37 9 60 12Q86 13 90 31Q91 41 80 45L66 36Q46 38 29 44Z" fill="currentColor"/><path d="M30 30Q48 31 67 17M44 35Q68 32 80 23M59 37Q75 37 83 32" fill="none" stroke="#F4DFB7"/>',
   hood:'<path d="M30 63Q20 38 32 22Q45 11 62 14Q88 18 88 45L84 64L79 53Q77 37 69 31Q47 28 37 43L35 61Z" fill="#F9EFE0"/><path d="M26 43Q38 26 69 26Q79 27 85 36" stroke="currentColor" fill="none" stroke-width="4"/>',
   crown:'<path d="M35 37L30 20L44 28L56 15L69 28L83 19L79 37Q57 29 35 37Z" fill="#E8BD68"/><path d="M57 27L61 31L57 35L53 31Z" fill="currentColor"/>',
   hat:'<path d="M34 36L39 17Q54 13 72 17L79 36Z" fill="currentColor"/><path d="M37 28Q56 30 76 28M23 37Q58 31 92 37Q92 46 57 44Q22 47 23 37Z" fill="#53404A"/>',
+  stovepipe:'<path d="M39 37L38 9Q56 4 75 9L75 36Z" fill="#3A343E"/><path d="M38 27Q57 30 75 27L75 35Q57 37 39 35Z" fill="#746167"/><path d="M38 34Q18 36 23 41Q29 46 56 44Q88 45 92 40Q94 37 75 34" fill="#3A343E"/>',
+  boater:'<path d="M37 36V22Q57 16 77 22L77 37Z" fill="#D8B576"/><path d="M37 29Q57 31 77 29V36H37Z" fill="#55434B"/><ellipse cx="57" cy="38" rx="35" ry="5" fill="#E4C48D"/>',
+  feltHat:'<path d="M34 38L38 20Q56 15 74 20L80 38Z" fill="#929296"/><path d="M38 31Q57 29 77 33L80 38L35 39Z" fill="#666571"/><path d="M25 37Q57 33 90 36Q92 43 57 46Q20 46 25 37Z" fill="#AAA8A9"/>',
+  diadem:'<path d="M32 44Q52 34 80 40L82 44Q56 39 32 48Z" fill="#C7A0AF"/><path d="M78 43L88 53L81 59L79 50" fill="#C7A0AF"/>',
+  bowler:'<path d="M33 36Q32 17 56 16Q81 16 81 36Z" fill="#3B3540"/><path d="M34 32H80M22 37Q39 40 58 37Q79 39 92 36Q92 46 57 45Q22 45 22 37Z" fill="#4C4148"/>',
+  kasa:'<path d="M20 41Q39 32 51 18Q56 14 63 19Q75 32 96 41Q58 49 20 41Z" fill="#D2AE73"/><path d="M29 40L53 22M42 42L55 23M57 43L58 22M71 42L63 24M85 41L67 26" fill="none" stroke="#937451" stroke-width="1.3"/>',
+  skullCap:'<path d="M34 45Q24 35 38 24Q47 18 59 18Q80 19 83 34L81 45Q60 35 34 45Z" fill="#3D3540"/><path d="M34 38Q55 29 81 38M42 26Q48 24 57 24" fill="none" stroke="#6B5964"/>',
+  ritualHood:'<path d="M31 47L33 25Q36 12 57 7Q76 14 83 27L83 47Q57 32 31 47Z" fill="#514653"/><path d="M32 40Q54 30 81 40M51 17L55 12M34 42L31 60M80 42L84 62" stroke="#AF9882" fill="none"/>',
+  monkHood:'<path d="M29 77L24 49Q20 33 33 24Q48 10 66 16Q90 19 89 47L83 77L77 66L81 49Q79 32 63 28Q44 23 34 44L36 65Z" fill="#9EA99E"/><path d="M26 53L31 70M84 51L81 70M30 35Q49 17 69 22" fill="none" stroke="#D2C9AF"/>',
   laurel:'<path d="M36 46Q34 29 48 22M78 46Q81 30 66 22" fill="none" stroke="#55765F"/><path d="M39 35Q29 31 34 25Q43 25 39 35ZM44 28Q38 21 44 17Q51 21 44 28ZM75 35Q85 31 80 25Q71 25 75 35ZM70 28Q76 21 70 17Q63 21 70 28Z" fill="#91A878"/>',
   ribbon:'<path d="M76 35Q77 20 86 21Q91 25 84 33Q99 29 100 36Q98 44 84 38L89 48L82 48L77 39Z" fill="currentColor"/>'
 };
@@ -1795,11 +2022,16 @@ const PORTRAIT_HATS = {
 /* 小物は、職業や掲載エピソードから選んだモチーフ。 */
 const PORTRAIT_PROPS = {
   book:'<path d="M2 5Q8 3 14 7Q20 3 26 5V23Q20 21 14 25Q8 21 2 23Z" fill="#F9ECCF"/><path d="M14 7V25M6 10L10 11M18 11L22 10M6 15L10 16M18 16L22 15" fill="none"/>',
+  woodBook:'<path d="M2 18L5 4M6 20L10 2M10 19L15 5M2 13L12 15" stroke="#805C47" stroke-width="3"/><path d="M8 11Q13 10 17 13Q21 10 26 10V23Q21 22 17 25Q12 23 8 24Z" fill="#F9ECCF"/><path d="M17 13V25M11 15L14 16M21 15L24 14M11 19L14 20" fill="none"/>',
+  shaku:'<path d="M10 25L15 4Q16 1 22 3L17 26Z" fill="#DABB8F"/><path d="M14 20L18 6" fill="none" stroke="#BA9165"/>',
+  airplane:'<path d="M2 10L22 5L27 9L22 12L3 17Z" fill="#EACFA2"/><path d="M3 19L22 14L27 18L22 21L4 25Z" fill="#D5AE75"/><path d="M5 16L6 19M16 13L17 16M23 11L23 15M14 20L18 23M18 23L25 21" fill="none"/>',
   scroll:'<path d="M7 5H25Q20 10 21 21H5Q10 14 7 5Z" fill="#F4DCAC"/><path d="M7 5Q2 2 2 7V10H8M5 21Q2 21 2 24H19Q22 24 21 21M11 11H18M11 15H17" fill="none"/>',
   pen:'<path d="M5 23L8 15L21 3L26 8L13 21Z" fill="#DBA65F"/><path d="M8 15L13 21M18 6L23 11M5 23L3 26" fill="none"/>',
   brush:'<path d="M9 19L21 3L25 6L13 22Z" fill="#C68B56"/><path d="M10 17Q4 17 3 25Q9 28 14 21Z" fill="#4D3E43"/>',
   palette:'<path d="M22 6Q33 15 23 23Q14 29 5 22Q0 17 4 9Q9 2 22 6Z" fill="#EEC291"/><circle cx="8" cy="13" r="2.2" fill="#D98182"/><circle cx="13" cy="9" r="2.2" fill="#E3B866"/><circle cx="19" cy="11" r="2.2" fill="#82A684"/><circle cx="23" cy="16" r="2.2" fill="#8CAEC1"/><circle cx="14" cy="20" r="2.5" fill="#F9EEE0"/>',
   flask:'<path d="M10 3H18M11 3V11L4 22Q3 25 7 25H21Q25 25 24 22L17 11V3" fill="#F2F9F5"/><path d="M7 18Q14 15 21 18L24 23Q25 25 21 25H7Q3 25 5 22Z" fill="#91B6AC"/><circle cx="14" cy="21" r="1.2" fill="#F2F9F5" stroke="none"/>',
+  petri:'<ellipse cx="14" cy="16" rx="12" ry="8" fill="#D8C3AA"/><ellipse cx="14" cy="13" rx="12" ry="8" fill="#F4E0B7"/><path d="M7 13Q6 9 12 9L17 13L14 16Q9 18 7 13ZM18 8L22 11L20 14" fill="#8DA988" stroke="none"/>',
+  pea:'<path d="M3 21Q4 7 24 4Q27 11 20 18Q12 26 3 21Z" fill="#94B77B"/><path d="M4 22Q15 11 24 5" fill="none"/><circle cx="9" cy="16" r="2.4" fill="#BDCD89"/><circle cx="14" cy="12" r="2.4" fill="#BDCD89"/><circle cx="19" cy="9" r="2.4" fill="#BDCD89"/>',
   atom:'<g fill="none" stroke="#5C748B"><ellipse cx="14" cy="14" rx="12" ry="5"/><ellipse cx="14" cy="14" rx="12" ry="5" transform="rotate(60 14 14)"/><ellipse cx="14" cy="14" rx="12" ry="5" transform="rotate(120 14 14)"/></g><circle cx="14" cy="14" r="3" fill="#DBAA63"/>',
   gear:'<path d="M11 3H17L18 7L22 6L25 10L23 14L25 18L22 22L18 21L17 25H11L10 21L6 22L3 18L5 14L3 10L6 6L10 7Z" fill="#C2B6A6"/><circle cx="14" cy="14" r="4" fill="#F8E8CC"/>',
   globe:'<circle cx="14" cy="12" r="10" fill="#B9D6D5"/><path d="M7 6L13 4L16 8L12 12L15 16L11 20L8 15L5 13M20 8L24 12L20 14L17 11Z" fill="#7C9F7D"/><path d="M14 22V26M8 26H20" fill="none"/>',
@@ -1835,12 +2067,20 @@ function portraitClothes(outfit, accent, skin) {
     kimono:'<path d="M38 86L64 114L75 114L48 82ZM68 82L42 111L51 115L77 86Z" fill="#F3DCB7"/><path d="M22 109Q59 104 96 109" fill="none" stroke="#B18D71"/>',
     court:'<path d="M35 86L61 111L71 107L49 81ZM66 81L45 108L55 109L79 86Z" fill="#F0D4A0"/><path d="M28 92L55 116M84 91L64 114" fill="none" stroke="#F6E6CE"/>',
     samurai:'<path d="M33 87L54 113H65L47 81ZM66 82L52 109L64 111L81 87Z" fill="#E8E0CF"/><path d="M20 110H98" stroke="#5A4950"/>',
+    kamishimo:'<path d="M16 93L42 84L54 110H48ZM98 93L72 84L62 110H68Z" fill="#6E707E"/><path d="M42 85L58 106L71 85M55 108H66M29 94L41 88M84 94L73 88" fill="none" stroke="#F0DAC2"/><circle cx="38" cy="97" r="2.3" fill="#E2BA81"/><circle cx="78" cy="97" r="2.3" fill="#E2BA81"/>',
     armor:'<path d="M35 87L39 108H78L82 87L69 81L57 93L45 81Z" fill="#504653"/><path d="M37 96H79M39 103H78M25 96L34 109M89 96L83 109M43 109V117M52 109V117M62 109V117M72 109V117" fill="none" stroke="#DFC17D"/>',
     monk:'<path d="M69 81L37 108L48 117L81 87Z" fill="#C0A078"/><path d="M55 88Q59 105 70 110" fill="none" stroke="#F2DEB2" stroke-dasharray="1 4" stroke-width="3"/>',
+    cleric:'<path d="M47 84H67L66 95H48Z" fill="#3F3A43"/><path d="M51 83H63L62 89H52Z" fill="#F7EEDE"/><path d="M57 95V118M39 89L48 103M76 89L66 103" fill="none"/>',
+    heavyRobe:'<path d="M14 118Q12 101 28 92L48 81L58 92L69 81L89 92Q103 101 104 118Z" fill="currentColor"/><path d="M40 86L69 113L81 117L48 81M68 82L42 110L31 116L76 85" fill="#C0A078"/><path d="M24 98L41 118M89 98L76 118" stroke="#E4C8A2" fill="none"/>',
     suit:'<path d="M47 82L57 90L67 82L63 116H51Z" fill="#F6E7D2"/><path d="M57 91L53 96L55 114H60L61 96Z" fill="#B07E78"/><path d="M40 86L45 99L51 107M73 86L69 99L63 107" fill="none"/>',
+    bowtie:'<path d="M47 82L57 90L67 82L64 116H50Z" fill="#F6E7D2"/><path d="M57 94L48 90L48 100L57 97L66 100V90Z" fill="#4A3940"/><path d="M40 86L45 99L51 107M73 86L69 99L63 107" fill="none"/>',
+    frock:'<path d="M48 82L56 87L67 82L67 111H47Z" fill="#FAEBD4"/><path d="M48 86L67 86L59 104L49 99Z" fill="#EACDB2"/><path d="M40 86L45 103L50 112M73 86L68 103L64 112" fill="none"/>',
+    ruff:'<path d="M36 85Q44 89 50 82L57 87L64 82Q71 89 79 85L86 92L82 97L77 97L74 102L68 101L65 105L59 103L55 105L49 101L43 102L40 97L35 98L30 92Z" fill="#FAECDA"/><path d="M36 89L43 96M45 90L50 99M52 90L56 101M62 90L60 101M69 90L66 99M77 89L72 96" stroke="#BBA49C" stroke-width="1.2" fill="none"/>',
     dress:'<path d="M43 84Q47 97 57 98Q67 97 72 84L65 81L57 89L49 81Z" fill="#F5DEBF"/><path d="M34 103L30 118M80 103L84 118" fill="none"/>',
+    highNeck:'<path d="M47 83V76H67V83L73 88L65 98H49L41 88Z" fill="currentColor"/><path d="M47 80H67M57 84V115" stroke="#C6ADB2" fill="none"/><circle cx="57" cy="89" r="2" fill="#ECCB93"/>',
     lab:'<path d="M22 118Q21 95 40 87L48 83L47 99L57 114L67 98L66 83L78 88Q96 94 98 118Z" fill="#F7F2E5"/><path d="M46 85L40 96L48 100L44 106L53 115M68 85L74 96L66 100L70 106L61 115M77 108H87V115H77Z" fill="none" stroke="#887983"/>',
     work:'<path d="M38 87L46 96L56 89L48 81ZM66 81L58 89L68 96L76 87Z" fill="#DFC5A2"/><path d="M57 91V117M30 100H43V111H30Z" fill="none"/>',
+    patterned:'<path d="M38 87L46 96L56 89L48 81ZM66 81L58 89L68 96L76 87Z" fill="#DFB67B"/><path d="M57 91V117" fill="none"/><path d="M28 100L36 97L41 102L34 106ZM41 111L49 107L54 112L47 117ZM71 101L78 96L84 101L77 106ZM81 113L87 109L93 113L85 117Z" fill="#F3D4A0" stroke="none"/>',
     sport:'<path d="M43 83L57 96L71 83M19 105L33 111M83 111L98 105" fill="none" stroke="#F7E8CC" stroke-width="5"/>',
     explorer:'<path d="M38 87L47 95L57 89L48 81ZM66 81L57 89L68 95L76 87Z" fill="#D7C292"/><path d="M32 99L26 115M77 100L88 105" fill="none"/>',
     ancient:'<path d="M34 86Q49 101 70 112L78 108Q62 98 42 83Z" fill="#F2DFC1"/><path d="M28 92L52 112M78 107L91 112" fill="none"/>',
@@ -1850,27 +2090,66 @@ function portraitClothes(outfit, accent, skin) {
   return shirt + neck + (lines[outfit] || '');
 }
 
-function portraitFigure(spec, crest) {
+const PORTRAIT_FACE_OUTLINES = {
+  oval:'M32 49Q32 28 57 28Q82 28 82 49L80 66Q77 83 57 85Q37 83 34 66Z',
+  broad:'M32 49Q32 28 57 28Q82 28 82 49L83 65Q83 77 73 82Q57 89 41 82Q31 77 31 65Z',
+  lean:'M32 49Q32 28 57 28Q82 28 82 49L77 68Q74 76 64 85Q57 89 50 85Q40 76 37 68Z',
+  square:'M32 49Q32 28 57 28Q82 28 82 49L80 70Q79 79 72 84Q57 88 42 84Q35 79 34 70Z',
+  round:'M32 49Q32 28 57 28Q82 28 82 49Q86 68 75 79Q57 91 39 79Q28 68 32 49Z'
+};
+const PORTRAIT_BROWS = {
+  soft:'<path d="M42 49Q46 47 50 49M64 49Q68 47 72 49"/>',
+  thick:'<path d="M40 49Q46 45 51 48M63 48Q68 45 74 49" stroke-width="2.7"/>',
+  straight:'<path d="M41 49L51 48M63 48L73 49" stroke-width="2"/>',
+  lifted:'<path d="M40 50Q45 44 51 48M63 48Q69 44 74 50" stroke-width="2.2"/>'
+};
+const PORTRAIT_MOUTHS = {
+  smile:'M52 72Q57 76 62 72',
+  calm:'M51 73Q56 71 63 73',
+  grin:'M50 71Q57 75 65 70Q63 77 57 77Q52 77 50 71Z',
+  serious:'M51 73Q56 72 63 72'
+};
+const PORTRAIT_EYES = {
+  open:'<ellipse cx="46" cy="56" rx="3.1" ry="4.2"/><ellipse cx="68" cy="56" rx="3.1" ry="4.2"/>',
+  narrow:'<ellipse cx="46" cy="56" rx="3.6" ry="3.1"/><ellipse cx="68" cy="56" rx="3.6" ry="3.1"/>',
+  deep:'<ellipse cx="46" cy="57" rx="2.8" ry="3.3"/><ellipse cx="68" cy="57" rx="2.8" ry="3.3"/>'
+};
+
+function portraitFigure(spec, crest, profile = {}) {
   const [skinName, hairName, hairStyle, beard, outfit, prop, features, accent] = spec;
   const skin = PORTRAIT_SKIN[skinName];
   const hair = PORTRAIT_HAIR_COLOR[hairName];
+  const beardColor = PORTRAIT_HAIR_COLOR[profile.beardColor] || hair;
   const adornments = features.split(',');
   const front = [
     adornments.includes('round') && '<g fill="none"><circle cx="46" cy="56" r="8"/><circle cx="68" cy="56" r="8"/><path d="M54 56Q57 53 60 56M38 55L34 54M76 55L80 54"/></g>',
     adornments.includes('glasses') && '<g fill="none"><rect x="38" y="50" width="16" height="12" rx="4"/><rect x="60" y="50" width="16" height="12" rx="4"/><path d="M54 54H60M38 53L34 52M76 53L80 52"/></g>',
     adornments.includes('monocle') && '<circle cx="68" cy="55" r="8" fill="none"/><path d="M75 58Q83 72 77 82" fill="none"/>',
+    adornments.includes('boldGlasses') && '<g fill="none" stroke-width="3.1"><rect x="36" y="49" width="19" height="13" rx="3"/><rect x="59" y="49" width="19" height="13" rx="3"/><path d="M55 54H59M36 53L32 52M78 53L82 52"/></g>',
+    adornments.includes('goldGlasses') && '<g fill="none" stroke="#987443" stroke-width="2.3"><rect x="36" y="49" width="19" height="13" rx="4"/><rect x="59" y="49" width="19" height="13" rx="4"/><path d="M55 54H59M36 53L32 52M78 53L82 52"/></g>',
     adornments.includes('earring') && '<g fill="#E9BD6D"><circle cx="33" cy="66" r="3"/><circle cx="81" cy="66" r="3"/></g>'
   ].filter(Boolean).join('');
+  const jaw = PORTRAIT_FACE_OUTLINES[profile.face] || PORTRAIT_FACE_OUTLINES.oval;
+  const brows = PORTRAIT_BROWS[profile.brows] || PORTRAIT_BROWS.soft;
+  const eyes = PORTRAIT_EYES[profile.eyes] || PORTRAIT_EYES.open;
+  const mouth = PORTRAIT_MOUTHS[profile.mouth] || PORTRAIT_MOUTHS.smile;
+  const nose = profile.nose === 'long' ? 'M57 58Q56 61 54 64Q56 66 59 64' : 'M56 63Q57 61 58 63';
+  const ageLines = profile.mature ? '<path d="M50 43Q57 42 64 43M40 62L42 64M72 62L74 64M46 70L44 73M68 70L70 73" opacity=".32"/>' : '';
+  const headSupport = profile.headSupport ?
+    '<path d="M80 53H89Q95 53 95 60V79H90V110H83V73H80Z" fill="#565261"/>' : '';
   const face = '<g fill="' + skin + '"><ellipse cx="33" cy="59" rx="6" ry="8"/><ellipse cx="81" cy="59" rx="6" ry="8"/>' +
-    '<path d="M32 49Q32 28 57 28Q82 28 82 49L80 66Q77 83 57 85Q37 83 34 66Z"/></g>' +
+    '<path d="' + jaw + '"/></g>' +
     '<g fill="#CA776F" opacity=".44" stroke="none"><ellipse cx="40" cy="64" rx="4.2" ry="2.5"/><ellipse cx="74" cy="64" rx="4.2" ry="2.5"/></g>' +
-    '<g fill="#392A30" stroke="none"><ellipse cx="46" cy="56" rx="3.1" ry="4.2"/><ellipse cx="68" cy="56" rx="3.1" ry="4.2"/></g>' +
+    '<g fill="#392A30" stroke="none">' + eyes + '</g>' +
     '<g fill="#FFF9ED" stroke="none"><circle cx="46.8" cy="54.8" r="1"/><circle cx="68.8" cy="54.8" r="1"/></g>' +
-    '<g fill="none" stroke-width="1.5"><path d="M42 49Q46 47 50 49M64 49Q68 47 72 49M56 63Q57 61 58 63M52 72Q57 76 62 72"/></g>';
+    '<g fill="none" stroke-width="1.5"><g stroke="' + (PORTRAIT_HAIR_COLOR[profile.browColor] || '#47353B') + '">' + brows +
+    '</g><path d="' + nose + mouth + '"/>' + ageLines + '</g>';
   return '<g color="' + accent + '" stroke="#47353B" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">' +
+    headSupport +
     '<g fill="' + hair + '">' + (PORTRAIT_BACK_HAIR[hairStyle] || '') + '</g>' +
     portraitClothes(outfit, accent, skin) + face +
-    '<g fill="' + hair + '">' + PORTRAIT_HAIR[hairStyle] + (PORTRAIT_BEARD[beard] || '') + '</g>' +
+    '<g fill="' + hair + '">' + PORTRAIT_HAIR[hairStyle] + '</g>' +
+    (PORTRAIT_BEARD[beard] ? '<g fill="' + beardColor + '">' + PORTRAIT_BEARD[beard] + '</g>' : '') +
     adornments.map(function(feature){ return PORTRAIT_HATS[feature] || ''; }).join('') + front +
     (crest || '') +
     (PORTRAIT_PROPS[prop] ? '<g transform="translate(82 84)"><circle cx="14" cy="14" r="17" fill="#FFF5E1" stroke="#D7BF9D" stroke-width="1.5"/><g stroke-width="1.7">' + PORTRAIT_PROPS[prop] + '</g></g>' : '') +
@@ -1879,9 +2158,10 @@ function portraitFigure(spec, crest) {
 
 function drawPersonPortraitSvg(personId, spec) {
   const second = PORTRAIT_PAIRS[personId];
-  let art = portraitFigure(spec, PORTRAIT_DETAILS[personId]);
+  const profile = PORTRAIT_PROFILES[personId];
+  let art = portraitFigure(spec, PORTRAIT_DETAILS[personId], profile);
   if (second) {
-    art = '<g transform="translate(-6 5) scale(.72)">' + portraitFigure(second) + '</g>' +
+    art = '<g transform="translate(-6 5) scale(.72)">' + portraitFigure(second, '', profile?.second) + '</g>' +
       '<g transform="translate(40 27) scale(.72)">' + art + '</g>';
   }
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">' +

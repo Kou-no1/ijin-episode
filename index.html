@@ -125,9 +125,9 @@
     display:flex; align-items:center; gap:clamp(12px, 3vw, 22px); margin-bottom:12px;
   }
   .portrait-art{
-    display:block; flex-shrink:0; width:clamp(68px, 18vw, 112px); height:auto;
-    border-radius:22%; border:1px solid var(--color-border);
+    display:block; flex-shrink:0; height:auto; border-radius:22%; border:1px solid var(--color-border);
   }
+  .person-heading .portrait-art{ width:clamp(68px, 18vw, 112px); }
   .portrait-art--murasaki{ background:#EFE4EC; }
   .person-heading-text{ min-width:0; overflow-wrap:anywhere; }
   .person-name{
@@ -1877,34 +1877,45 @@ function portraitFigure(spec, crest) {
     '</g>';
 }
 
-function renderPersonPortrait(person) {
-  const spec = PERSON_PORTRAITS[person.id];
-  if (!spec) return renderAvatar(person, 88);
-  // トップと人物詳細で同じ紫式部のイラストを使う。
-  if (person.id === '053') {
-    const headingIcon = document.querySelector('.site-icon');
-    if (headingIcon) {
-      return '<img class="portrait-art portrait-art--murasaki" src="' +
-        escapeHtml(headingIcon.getAttribute('src')) + '" width="112" height="112" alt="">';
-    }
-  }
-  let art = portraitFigure(spec, PORTRAIT_DETAILS[person.id]);
-  const second = PORTRAIT_PAIRS[person.id];
+function drawPersonPortraitSvg(personId, spec) {
+  const second = PORTRAIT_PAIRS[personId];
+  let art = portraitFigure(spec, PORTRAIT_DETAILS[personId]);
   if (second) {
     art = '<g transform="translate(-6 5) scale(.72)">' + portraitFigure(second) + '</g>' +
-      '<g transform="translate(40 27) scale(.72)">' + portraitFigure(spec) + '</g>';
+      '<g transform="translate(40 27) scale(.72)">' + art + '</g>';
   }
-  return '<svg class="portrait-art" viewBox="0 0 120 120" width="112" height="112" aria-hidden="true" focusable="false">' +
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">' +
     '<rect width="120" height="120" fill="#F6EBDD"/>' +
     '<circle cx="60" cy="56" r="43" fill="' + spec[7] + '" opacity=".19"/>' +
     '<path d="M19 32V44M13 38H25M102 51V61M97 56H107" stroke="#C69862" stroke-width="1.6" stroke-linecap="round" opacity=".78"/>' +
     art + '</svg>';
 }
 
+// ページ内で画像を共有し、検索や絞り込みのたびにSVGを作り直さない。
+const portraitSources = new Map();
+
+function renderPersonPortrait(person, size, lazy = false) {
+  const spec = PERSON_PORTRAITS[person.id];
+  if (!spec) return renderAvatar(person, size);
+
+  const isMurasaki = person.id === '053';
+  if (!portraitSources.has(person.id)) {
+    const headingIcon = isMurasaki ? document.querySelector('.site-icon') : null;
+    const source = headingIcon?.getAttribute('src') ||
+      URL.createObjectURL(new Blob([drawPersonPortraitSvg(person.id, spec)], {type:'image/svg+xml'}));
+    portraitSources.set(person.id, source);
+  }
+
+  return '<img class="portrait-art' + (isMurasaki ? ' portrait-art--murasaki' : '') +
+    '" src="' + escapeHtml(portraitSources.get(person.id)) +
+    '" width="' + size + '" height="' + size + '" alt=""' +
+    (lazy ? ' loading="lazy" decoding="async"' : '') + '>';
+}
+
 
 function renderCard(person){
   return '<button type="button" class="person-card" data-id="' + person.id + '">' +
-    renderAvatar(person, 64) +
+    renderPersonPortrait(person, 64, true) +
     '<div class="person-card-info">' +
       '<p class="person-card-name">' + escapeHtml(person.name) + '</p>' +
       '<p class="person-card-sub">' + escapeHtml(person.years) + '・' + escapeHtml(person.field) + '</p>' +
@@ -2006,7 +2017,7 @@ function buildDetailHtml(person, episodes){
     '<div class="detail-top"><button type="button" class="close-btn" id="close-detail-btn">✕ 閉じる</button></div>' +
     '<div class="person-meta">' +
       '<div class="person-heading">' +
-        renderPersonPortrait(person) +
+        renderPersonPortrait(person, 112) +
         '<div class="person-heading-text">' +
           '<h2 class="person-name">' + person.nameHtml + '</h2>' +
           '<p class="person-sub">' + escapeHtml(person.years) + '・' + escapeHtml(person.country) + '・' + escapeHtml(person.field) + '</p>' +
